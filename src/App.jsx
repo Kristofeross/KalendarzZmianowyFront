@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css'; // Importuj style
+import 'react-calendar/dist/Calendar.css'; 
 import './App.css';
+import UserDataGet from './UserDataGet';
 
 class MyCalendar extends Component {
   constructor(props) {
@@ -31,6 +32,7 @@ class MyCalendar extends Component {
         </div>
         <div className="second-div">
           <h1>Przestrzeń na wydarzenia</h1>
+          <UserDataGet />
         </div>
       </div>
     );
