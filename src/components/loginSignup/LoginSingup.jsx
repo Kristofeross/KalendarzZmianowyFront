@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Navigate } from "react-router-dom";
 import "./LoginSignup.css";
 import axios from "axios";
 
@@ -40,7 +41,7 @@ class LoginSignup extends Component {
         try {
             const response = await axios.post("http://localhost:4000/api/login", data);
             console.log("Response:", response.data);
-            this.state({
+            this.setState({
                 isLogged: response.data.isLogged
             })
         } catch (error) {
@@ -54,8 +55,15 @@ class LoginSignup extends Component {
         const {action, diffPass, name, email, password, repeatedPass } = this.state;
         // const style = {cursor: 'pointer', paddingTop: '16px', border: '1px solid #000'}
 
+        // Do przekierowania
+
         return (
-            <div className="container">
+        <>
+            <div>
+                {!this.state.isLogged ? <div>Private Route</div> : <Navigate replace to="/calendar" />}
+            </div>
+
+            <div className="containerLoginRegister">
     
                 <div className="header">
                     <div className="text">{action}</div>
@@ -96,6 +104,7 @@ class LoginSignup extends Component {
                 </div>
     
             </div>
+        </>
         )
     }
 }
