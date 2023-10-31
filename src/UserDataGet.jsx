@@ -20,7 +20,6 @@ const UserDataGet = () => {
 
   return (
     <div>
-      {/* Tutaj wyświetl dane, np. w formie listy */}
       <ul>
         {data.map((user) => (
           <li key={user.id}>
