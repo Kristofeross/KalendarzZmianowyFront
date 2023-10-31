@@ -1,9 +1,9 @@
 /* Do kalendarza */
 /* Na razie zakomentowane ale potrzebne */
-/* .container {
+.container {
   display: flex;
   text-align: center;
-} */
+}
 
 .calendar {
   margin: 0 auto;

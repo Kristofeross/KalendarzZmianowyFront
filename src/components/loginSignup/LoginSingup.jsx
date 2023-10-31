@@ -7,9 +7,14 @@ import user_icon from '../assets/person.png';
 import email_icon from '../assets/email.png';
 import password_icon from '../assets/password.png';
 
+
 class LoginSignup extends Component {
 
     state = {
+        user: null,
+
+        message: null,
+
         isLogged: false,
         diffPass: false,
         action: "Logowanie",
@@ -19,6 +24,7 @@ class LoginSignup extends Component {
         repeatedPass: ""
     }
 
+    // Do pól formularza
     handleChangeInputs = e => {
         // console.log(e.target.value)
         this.setState({
@@ -26,42 +32,102 @@ class LoginSignup extends Component {
         })
     }
 
-    handleFormSubmit = async () => {
-
+    // Do wyboru rejestracji lub logowania
+    handleChangeForm = action => {
         this.setState({
+            action: action,
+
+            message: null,
+
+            name: "",
+            email: "",
+            password: "",
+            repeatedPass: "",
             diffPass: false
         })
+    }
 
-        const { name, email, password } = this.state;
-        const data = {
-            name: name,
-            email: email,
-            password: password,
-        };
-        try {
-            const response = await axios.post("http://localhost:4000/api/login", data);
-            console.log("Response:", response.data);
-            this.setState({
-                isLogged: response.data.isLogged
-            })
-        } catch (error) {
-            console.error("Error:", error);
+    // Do przycisku wysyłającego formularz
+    handleFormSubmit = async () => {
+
+        const { action, diffPass, name, email, password, repeatedPass } = this.state;
+
+        if (action === "Rejestracja" ) {
+
+            if (password === repeatedPass) {
+
+                //Walidacja do emali
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    this.setState({ message: "Niepoprawny adres email" });
+                    return;
+                }
+                //Walidacja do hasła
+                if (!/(?=.*[A-Za-z])(?=.*\d).{2,}/.test(password)) {
+                    this.setState({ message: "Hasło musi zawierać przynajmniej dwie litery i co najmniej jedną cyfrę" });
+                    return;
+                }
+
+                const data = {
+                    action: action,
+                    name: name,
+                    email: email,
+                    password: password,
+                };
+                try {
+                    const response = await axios.post("http://localhost:4000/api/login", data);
+                    console.log("Response:", response.data);
+
+                    this.setState({
+                        message: response.data.message
+                    })
+
+                } catch (error) {
+                    console.error("Error:", error);
+                }
+                console.log(data);
+                
+            }
+            else{
+                this.setState({ diffPass: true });
+                // console.log(`DiffPass ${diffPass}`);
+                // console.log("Nie Przeszło");
+            }
+
         }
-        console.log(data);
+        else{
+            const data = {
+                action: action,
+                // name: name,
+                email: email,
+                password: password,
+            };
+            try {
+                const response = await axios.post("http://localhost:4000/api/login", data);
+                console.log("Response:", response.data);
+                this.setState({
+                    isLogged: response.data.isLogged,
+                    message: response.data.message
+                })
+
+            } catch (error) {
+                console.error("Error:", error);
+            }
+            console.log(data);
+        }
     };
 
     render(){
 
         const {action, diffPass, name, email, password, repeatedPass } = this.state;
-        // const style = {cursor: 'pointer', paddingTop: '16px', border: '1px solid #000'}
+
+        // Przekierowanie użytkownika na inną stronę
+        if (this.state.isLogged) {
+            return <Navigate to="/calendar" />;
+        }
 
         // Do przekierowania
-
         return (
         <>
-            <div>
-                {!this.state.isLogged ? <div>Private Route</div> : <Navigate replace to="/calendar" />}
-            </div>
 
             <div className="containerLoginRegister">
     
@@ -94,10 +160,12 @@ class LoginSignup extends Component {
                 {action === "Rejestracja" ? <div></div> : <div className="forgot-password">
                     Zapomniałeś hasła? <span>Naciśnij tu!</span>
                 </div> }      
+
+                { this.state.message ? <p>{this.state.message}</p> : null }
     
                 <div className="submit-container">
-                    <div className={action === "Logowanie" ? "submit gray" : "submit"} onClick={()=>{this.setState({action: "Rejestracja"})}} >Zarejestruj się</div>
-                    <div className={action === "Rejestracja" ? "submit gray" : "submit"} onClick={()=>{this.setState({action: "Logowanie"})}} >Zaloguj się</div> 
+                    <div className={action === "Logowanie" ? "submit gray" : "submit"} onClick={()=>{this.handleChangeForm("Rejestracja")}} >Zarejestruj się</div>
+                    <div className={action === "Rejestracja" ? "submit gray" : "submit"} onClick={()=>{this.handleChangeForm("Logowanie")}} >Zaloguj się</div> 
                 </div>
                 <div className="submit-container2">
                     <div className="submit" onClick={this.handleFormSubmit} >Enter</div>
