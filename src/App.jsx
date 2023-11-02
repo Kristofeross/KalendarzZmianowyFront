@@ -19,9 +19,17 @@ const MyCalendar = () => {
     setDate(date);
   };
 
+  // Przekierowanie jeśli nie jesteś zalogowany
+  useEffect(() => {
+    if (!sessionStorage.getItem('token')) {
+      navigate('/');
+    }
+  }, [navigate]);
+
   // Do przekierowania bez warningów
   useEffect(() => {
     if (logout) {
+      sessionStorage.removeItem('token');
       navigate('/');
     }
   }, [logout, navigate]);
@@ -30,6 +38,12 @@ const MyCalendar = () => {
   // if (logout) {
   //   navigate('/');
   // }
+
+  // const tokenl = localStorage.getItem('token');
+  const tokens = sessionStorage.getItem('token');
+  let tokenUser = 0;
+  // if(tokenl) tokenUser = 1;
+  if(tokens) tokenUser = 1;
 
   return (
     // Aktualna zawartość
@@ -47,7 +61,8 @@ const MyCalendar = () => {
       </div>
       <div className="second-div">
         <div onClick={handleLogout}>Wyloguj</div>
-        <h3>Przestrzeń na wydarzenia użytkownika </h3>
+        {/* <h3>Przestrzeń na wydarzenia użytkownika local {tokenUser}</h3> */}
+        <h3>Przestrzeń na wydarzenia użytkownika session {tokenUser}</h3>
         <UserDataGet />
       </div>
     </div>

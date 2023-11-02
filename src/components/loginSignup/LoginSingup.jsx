@@ -12,7 +12,7 @@ const LoginSignup = () => {
 
     // Do state
     const [message, setMessage] = useState(null);
-    const [isLogged, setIsLogged] = useState(false);
+    const [isToken, setToken] = useState(null);
     const [diffPass, setDiffPass] = useState(false);
     const [action, setAction] = useState("Logowanie");
     const [name, setName] = useState("");
@@ -66,13 +66,13 @@ const LoginSignup = () => {
                     return;
                 }
                 const data = {
-                    action: action,
-                    name: name,
-                    email: email,
+                    // action: action,
+                    username: name,
+                    mail: email,
                     password: password,
                 };
                 try {
-                    const response = await axios.post("http://localhost:4000/api/login", data);
+                    const response = await axios.post("http://127.0.0.1:5000/api/register", data);
                     console.log("Response:", response.data);
                     setMessage(response.data.message);
                 } catch (error) {
@@ -82,18 +82,26 @@ const LoginSignup = () => {
             } else {
                 setDiffPass(true);
             }
-        } else {
+        } else { // Logowanie
             const data = {
-                action: action,
-                email: email,
+                // action: action,
+                // email: email,
+                username: name,
                 password: password,
             };
             try {
-                const response = await axios.post("http://localhost:4000/api/login", data);
-                console.log("Response:", response.data);
-                setIsLogged(response.data.isLogged);
-                setName(response.data.name);
-                setMessage(response.data.message);
+                const response = await axios.post("http://127.0.0.1:5000/api/login", data);
+                // console.log("Response:", response);
+                console.log("Response:", response.data);    
+                // console.log("Response:", response.data.token);
+
+                // Za pomocą localStorage
+                // localStorage.setItem('token', response.data.token);
+                // const token = localStorage.getItem('token');
+
+                // Za pomocą sessionStorage
+                sessionStorage.setItem('token', response.data.token);
+                if( sessionStorage.getItem('token') ) setToken(true);       
 
             } catch (error) {
                 console.error("Error:", error);
@@ -103,21 +111,34 @@ const LoginSignup = () => {
     };
 
     // Do lepszego przekierowywania
+    const checkToken = ()=>{
+        if (sessionStorage.getItem('token')) {
+            setToken(true);
+        }
+    }
 
     const navigateCallback = useCallback(() => {
-        if (isLogged) {
+        checkToken();
+        if (isToken) {
             navigate('/calendar');
         }
-    }, [navigate, isLogged]);
+    }, [navigate, isToken]);
 
     useEffect(() => {
         navigateCallback();
     }, [navigateCallback]);
 
+    // useEffect(() => {
+    //     navigateCallback();
+    // }, [navigateCallback]);
+
     // Przekierowanie z warningami
     // if (isLogged) {
     //     navigate('/calendar');
     // }
+
+    console.log( sessionStorage.getItem('token') );
+    // console.log(isLogged)
 
     return (
         <>
@@ -127,16 +148,18 @@ const LoginSignup = () => {
                     <div className="underline"></div>
                 </div>
                 <div className="inputs">
+
+                    <div className="input">
+                        <img src={user_icon} alt="" />
+                        <input type="text" placeholder="Nazwa użytkownika" value={name} onChange={handleChangeInputs} name="name" />
+                    </div>
+
                     {action === "Logowanie" ? null : (
                         <div className="input">
-                            <img src={user_icon} alt="" />
-                            <input type="text" placeholder="Nazwa użytkownika" value={name} onChange={handleChangeInputs} name="name" />
+                            <img src={email_icon} alt="" />
+                            <input type="email" placeholder="Email" value={email} onChange={handleChangeInputs} name="email"/>
                         </div>
                     )}
-                    <div className="input">
-                        <img src={email_icon} alt="" />
-                        <input type="email" placeholder="Email" value={email} onChange={handleChangeInputs} name="email"/>
-                    </div>
                     <div className="input">
                         <img src={password_icon} alt="" />
                         <input type="password" placeholder="Hasło" value={password} onChange={handleChangeInputs} name="password" />
