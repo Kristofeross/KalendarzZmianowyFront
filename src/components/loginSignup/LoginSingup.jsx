@@ -128,15 +128,6 @@ const LoginSignup = () => {
         navigateCallback();
     }, [navigateCallback]);
 
-    // useEffect(() => {
-    //     navigateCallback();
-    // }, [navigateCallback]);
-
-    // Przekierowanie z warningami
-    // if (isLogged) {
-    //     navigate('/calendar');
-    // }
-
     console.log( sessionStorage.getItem('token') );
     // console.log(isLogged)
 

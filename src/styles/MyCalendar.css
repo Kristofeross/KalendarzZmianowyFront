@@ -30,3 +30,20 @@
   font-weight: bold;
   text-transform: capitalize;
 } 
+
+/* Do EventSpace */
+.upBarEventSpace{
+  display: flex;
+  border: 1px solid #000;
+}
+.calendarDate{
+  width: 40%;
+  padding: 10px;
+  font-size: 16px;
+  border-right: 1px solid #000;
+}
+.amountEvents{
+  width: 60%;
+  padding: 10px;
+  font-size: 16px;
+}
