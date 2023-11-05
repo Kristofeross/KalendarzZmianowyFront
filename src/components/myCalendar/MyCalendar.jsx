@@ -190,25 +190,23 @@ const MyCalendar = () => {
     })
   }
 
-  const handleDeleteEvent = () => {
-    console.log("Kasowanie bez serwera na razie");
-    
+  const handleDeleteEvent = () => {  
     const idEvent = items.find(item => item.date === selectedDate)?.id;
-    // axios.delete(`http://127.0.0.1:5000/api/calendar/${idEvent}`, {
-    //   headers: {
-    //     "Authorization": tokens
-    //   }
-    // })
-    // .then(response => {
-    //   console.log('Sukces', response);
-    // })
-    // .catch(error => {
-    //   console.error('Błąd', error);
-    // })
+    axios.delete(`http://127.0.0.1:5000/api/calendar/delete/${idEvent}`, {
+      headers: {
+        "Authorization": tokens
+      }
+    })
+    .then(response => {
+      console.log('Sukces', response);
 
-    const updatedItems = items.filter(item => item.id !== idEvent);
-    setItems(updatedItems);
+      const updatedItems = items.filter(item => item.id !== idEvent);
+      setItems(updatedItems);
 
+    })
+    .catch(error => {
+      console.error('Błąd', error);
+    })
   }
 
   const handleCancelAction = () => {
@@ -250,7 +248,7 @@ const MyCalendar = () => {
 
   // console.log(date);
   // console.log(selectedDate);
-  console.log(items);
+  // console.log(items);
 
   return (
     // Aktualna zawartość
