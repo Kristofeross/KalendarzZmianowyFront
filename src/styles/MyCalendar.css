@@ -33,17 +33,20 @@
 
 /* Do EventSpace */
 .upBarEventSpace{
-  display: flex;
   border: 1px solid #000;
+  margin: 10px 0;
 }
 .calendarDate{
-  width: 40%;
+  width: 100%;
   padding: 10px;
   font-size: 16px;
   border-right: 1px solid #000;
+  text-align: center;
 }
-.amountEvents{
-  width: 60%;
-  padding: 10px;
-  font-size: 16px;
+.downBarEventSpace{
+  width: 100%;
+}
+.eventSpace{
+  width: 100%;
+  height: 200px;
 }
