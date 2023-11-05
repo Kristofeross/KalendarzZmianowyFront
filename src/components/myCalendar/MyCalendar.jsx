@@ -18,25 +18,8 @@ const MyCalendar = () => {
   const [isEventExist, setIsEventExist] = useState(true);
   const [selectedEvent, setSelectedEvent] = useState('work');
   const [isCurrentEvent, setIsCurrenEvent] = useState(true);
-  const [hours, setHours] = useState("");
+  const [hours, setHours] = useState(1);
   const [items, setItems] = useState([]);
-  // const [isUpdating] = useState(false);
-  // const [isDeleting] = useState(false);
-
-  
-
-  // Do zmiany daty
-  const onChange = (date) => {
-    setDate(date);
-
-    // Na wysłanie danych
-    const day = ('0' + date.getDate()).slice(-2);
-    const month = ('0' + (date.getMonth() + 1)).slice(-2);
-    const year = date.getFullYear();
-    const formattedDate = `${year}-${month}-${day}`;
-    setSelectedDate(formattedDate);
-
-  };
 
   // Do wylogowania
   const handleLogout = () => {
@@ -57,6 +40,40 @@ const MyCalendar = () => {
     }
   }, [logout, navigate]);
 
+  const stringDate = date => {
+    const day = ('0' + date.getDate()).slice(-2);
+    const month = ('0' + (date.getMonth() + 1)).slice(-2);
+    const year = date.getFullYear();
+    const formattedDate = `${year}-${month}-${day}`;
+    setSelectedDate(formattedDate);
+  }
+
+  // Do pierwszego wyświetlenia daty
+  useEffect(() => {
+    const todayDate = new Date();
+    stringDate(todayDate);
+  }, []);
+
+
+  // Do zmiany daty
+  const onChange = (date) => {
+    setDate(date);
+
+    // Do formularza z godzinami
+    if(selectedEvent === 'work') setHours(1);
+    else setHours(null);
+    
+    // Na wyświetlenie oraz wysłanie daty
+    stringDate(date);
+    // Do wyjścia z aktualizacji wydarzenia
+    setIsCurrenEvent(true)
+  };
+
+  // Do poprawnego wyświetlania danych
+  useEffect(() => {
+    const isEventFound = items.find(item => item.date === selectedDate);
+    isEventFound ? setIsEventExist(false) : setIsEventExist(true);
+  }, [selectedDate, items]);
 
   
   // Podreczne do styli
@@ -72,7 +89,6 @@ const MyCalendar = () => {
       entry_type: selectedEvent,
       work_hours: parseFloat(hours)
     }
-    console.log("Wysyłane dane",data)
     axios.post('http://127.0.0.1:5000/api/calendar/add', data, {
       headers: {
         "Authorization": tokens
@@ -100,7 +116,7 @@ const MyCalendar = () => {
         };
         setItems([...items, newItem]);
       
-        setIsEventExist(false);
+        // setIsEventExist(false);
       })
       .catch(getError => {
         console.error('Błąd podczas pobierania danych', getError);
@@ -113,26 +129,88 @@ const MyCalendar = () => {
   }
 
   const handleToUpdateSpace = () => {
+    const selectedItem = items.find((item) => item.date === selectedDate);
+    if (selectedItem) {
+      setSelectedEvent(selectedItem.entry_type);
+      setHours(selectedItem.work_hours);
+  }
     setIsCurrenEvent(false);
   }
 
   const handleUpdateEvent = () => {
-    console.log("Aktualizowanie")
+    const data = {
+      date: selectedDate,
+      entry_type: selectedEvent,
+      work_hours: parseFloat(hours)
+    }
+    // console.log('Dane do wysłania',data);
 
-    // console.log('Items:',items)
-    // console.log('Items[0]:',items[0])
-    // console.log('Items[0].id:',items[0].id)
-    // console.log('Items[0].date:',items[0].date)
-    // console.log('Items[0].type:',items[0].entry_type)
-    // console.log('Items[0].hours:',items[0].work_hours)
-    // console.log('selectedDate:',selectedDate)
-    // console.log('date:',date)
+    const idEvent = items.find((item) => item.date === selectedDate)?.id;
 
+    axios.put(`http://127.0.0.1:5000/api/calendar/update/${idEvent}`, data, {
+      headers: {
+        "Authorization": tokens
+      }
+    })
+    .then(response => {
+      console.log('Sukces', response);
+
+      axios.get(`http://127.0.0.1:5000/api/calendar/getById/${idEvent}`, {
+        headers: {
+          "Authorization": tokens
+        }
+      })
+      .then(getResponse => {
+        console.log('Dane pobrane', getResponse.data);
+  
+        const dateToChange = getResponse.data.date;
+        const newDate = new Date(dateToChange).toISOString().split('T')[0];
+
+        const updatedItem = {
+          id: getResponse.data._id,
+          date: newDate,
+          entry_type: selectedEvent,
+          work_hours: parseFloat(hours),
+        };
+
+        const updatedItems = items.find(item =>
+          item.id === idEvent ? updatedItem : item
+        );
+
+        setItems(updatedItems);
+      })
+      .catch(getError => {
+        console.error('Błąd podczas pobierania danych', getError);
+      });
+
+      setIsCurrenEvent(true)
+    })
+    .catch(error =>{
+      console.error('Błąd', error);
+    })
   }
 
   const handleDeleteEvent = () => {
-    console.log("Usuwanie")
+    console.log("Kasowanie bez serwera na razie");
+    
+    const idEvent = items.find(item => item.date === selectedDate)?.id;
+    // axios.delete(`http://127.0.0.1:5000/api/calendar/${idEvent}`, {
+    //   headers: {
+    //     "Authorization": tokens
+    //   }
+    // })
+    // .then(response => {
+    //   console.log('Sukces', response);
+    // })
+    // .catch(error => {
+    //   console.error('Błąd', error);
+    // })
+
+    const updatedItems = items.filter(item => item.id !== idEvent);
+    setItems(updatedItems);
+
   }
+
   const handleCancelAction = () => {
     setIsCurrenEvent(true)
   }
@@ -143,17 +221,37 @@ const MyCalendar = () => {
     // console.log(e.target.value);
     const selectedValue = e.target.value;
     setSelectedEvent(selectedValue);
-    if (selectedValue === 'vacation') {
-      setHours(null);
-    }
+    if (selectedValue === 'vacation') setHours(null);
+    // else setHours(1);
   }
   const handleHoursChange = e => {
     // console.log(e.target.value);
     setHours(e.target.value)
   }
 
+  const showData = () => {
+    return (
+      items.map(item => {
+        if (item.date === selectedDate) {
+          return (
+            <div key={item.id}>
+              <p>ID: {item.id}</p>
+              <p>Data: {item.date}</p>
+              <p>Typ: {item.entry_type}</p>
+              <p>Godziny pracy: {item.work_hours}</p>
+            </div>
+          );
+        } else {
+          return null; 
+        }
+      })
+    )
+  }
 
-  // /////////////////////////////////////////////////////////////////////////
+  // console.log(date);
+  // console.log(selectedDate);
+  console.log(items);
+
   return (
     // Aktualna zawartość
     <div className="container">   
@@ -205,20 +303,7 @@ const MyCalendar = () => {
                 <div>
                   <div>Aktualne wydarzenia</div>
                   <div className='eventSpace'>
-                  {items.map(item => {
-                    if (item.date === selectedDate) {
-                      return (
-                        <div key={item.id}>
-                          <p>ID: {item.id}</p>
-                          <p>Data: {item.date}</p>
-                          <p>Typ: {item.entry_type}</p>
-                          <p>Godziny pracy: {item.work_hours}</p>
-                        </div>
-                      );
-                    } else {
-                      return null; 
-                    }
-                  })}
+                  {showData()}
                   </div>
                   <div style={buttonsStyle}>
                     <div style={styles} onClick={handleToUpdateSpace} >Aktualizuj</div>
@@ -229,7 +314,20 @@ const MyCalendar = () => {
                 <div>
                   <div>Akualizowane wydarzenia</div>
                   <div className='eventSpace'>
-                    Na razie byle co
+                    <div>
+                      <select value={selectedEvent} name='selectedEvent' onChange={handleChangeSelect}>
+                        <option value="work">Praca</option>
+                        <option value="vacation">Urlop</option>     
+                      </select>
+                    </div>
+                    {
+                      selectedEvent === 'work' && (
+                        <div>
+                          <label htmlFor="">Liczba godzin: </label>
+                          <input type="number" value={hours} onChange={handleHoursChange} />
+                        </div>
+                      )
+                    }
                   </div>
                   <div style={buttonsStyle}>
                     <div style={styles} onClick={handleCancelAction} >Anuluj</div>
