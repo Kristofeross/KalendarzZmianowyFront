@@ -7,7 +7,7 @@ import '../../styles/MyCalendar.css';
 
 const MyCalendar = () => {
 
-  const tokens = sessionStorage.getItem('token');
+  const tokenUser = sessionStorage.getItem('token');
 
   const [date, setDate] = useState(new Date());
   const [logout, setLogout] = useState(false);
@@ -54,6 +54,22 @@ const MyCalendar = () => {
     stringDate(todayDate);
   }, []);
 
+  // Pobranie danych na początku
+  useEffect(() => {
+    axios.get('http://127.0.0.1:5000/api/calendar', {
+      headers: {
+        "Authorization": tokenUser
+      }
+    })
+    .then(response => {
+      console.log('Sukces', response)
+      setItems(response.data);
+    })
+    .catch(error => {
+      console.error('Błąd', error);
+    });
+  }, [tokenUser]);
+
 
   // Do zmiany daty
   const onChange = (date) => {
@@ -91,7 +107,7 @@ const MyCalendar = () => {
     }
     axios.post('http://127.0.0.1:5000/api/calendar/add', data, {
       headers: {
-        "Authorization": tokens
+        "Authorization": tokenUser
       }
     })
     .then(response => {
@@ -99,7 +115,7 @@ const MyCalendar = () => {
 
       axios.get(`http://127.0.0.1:5000/api/calendar/getById/${response.data}`, {
         headers: {
-          "Authorization": tokens
+          "Authorization": tokenUser
         }
       })
       .then(getResponse => {
@@ -109,7 +125,7 @@ const MyCalendar = () => {
         const newDate = dateToChange.substring(0, 10);
       
         const newItem = {
-          id: getResponse.data._id,
+          _id: getResponse.data._id,
           date: newDate,
           entry_type: getResponse.data.entry_type,
           work_hours: getResponse.data.work_hours,
@@ -145,11 +161,11 @@ const MyCalendar = () => {
     }
     // console.log('Dane do wysłania',data);
 
-    const idEvent = items.find((item) => item.date === selectedDate)?.id;
+    const idEvent = items.find((item) => item.date === selectedDate)?._id;
 
     axios.put(`http://127.0.0.1:5000/api/calendar/update/${idEvent}`, data, {
       headers: {
-        "Authorization": tokens
+        "Authorization": tokenUser
       }
     })
     .then(response => {
@@ -157,7 +173,7 @@ const MyCalendar = () => {
 
       axios.get(`http://127.0.0.1:5000/api/calendar/getById/${idEvent}`, {
         headers: {
-          "Authorization": tokens
+          "Authorization": tokenUser
         }
       })
       .then(getResponse => {
@@ -167,14 +183,14 @@ const MyCalendar = () => {
         const newDate = new Date(dateToChange).toISOString().split('T')[0];
 
         const updatedItem = {
-          id: getResponse.data._id,
+          _id: getResponse.data._id,
           date: newDate,
           entry_type: selectedEvent,
           work_hours: parseFloat(hours),
         };
 
-        const updatedItems = items.find(item =>
-          item.id === idEvent ? updatedItem : item
+        const updatedItems = items.map(item =>
+          item._id === idEvent ? updatedItem : item
         );
 
         setItems(updatedItems);
@@ -191,16 +207,16 @@ const MyCalendar = () => {
   }
 
   const handleDeleteEvent = () => {  
-    const idEvent = items.find(item => item.date === selectedDate)?.id;
+    const idEvent = items.find(item => item.date === selectedDate)?._id;
     axios.delete(`http://127.0.0.1:5000/api/calendar/delete/${idEvent}`, {
       headers: {
-        "Authorization": tokens
+        "Authorization": tokenUser
       }
     })
     .then(response => {
       console.log('Sukces', response);
 
-      const updatedItems = items.filter(item => item.id !== idEvent);
+      const updatedItems = items.filter(item => item._id !== idEvent);
       setItems(updatedItems);
 
     })
@@ -232,8 +248,8 @@ const MyCalendar = () => {
       items.map(item => {
         if (item.date === selectedDate) {
           return (
-            <div key={item.id}>
-              <p>ID: {item.id}</p>
+            <div key={item._id}>
+              <p>ID: {item._id}</p>
               <p>Data: {item.date}</p>
               <p>Typ: {item.entry_type}</p>
               <p>Godziny pracy: {item.work_hours}</p>
