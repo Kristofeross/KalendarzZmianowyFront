@@ -56,17 +56,22 @@ const LoginSignup = () => {
     // Do przycisku wysyłającego formularz
     const handleFormSubmit = async () => {
         if (action === "Rejestracja") {
+            if (!name || !email || !password) {
+                setMessage("Proszę wypełnić puste pola");
+                return;
+            }
             if (password === repeatedPass) {
-                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                const verificationEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+                const verificationPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/.test(password);
+                if (!verificationEmail) {
                     setMessage("Niepoprawny adres email");
                     return;
                 }
-                if (!/(?=.*[A-Za-z])(?=.*\d).{2,}/.test(password)) {
-                    setMessage("Hasło musi zawierać przynajmniej dwie litery i co najmniej jedną cyfrę");
+                if (!verificationPassword) {
+                    setMessage("Hasło musi zawierać przynajmniej szejść liter, w tym conajmniej jedną cyfrę oraz jedną duża literę");
                     return;
                 }
                 const data = {
-                    // action: action,
                     username: name,
                     mail: email,
                     password: password,
@@ -74,24 +79,28 @@ const LoginSignup = () => {
                 try {
                     const response = await axios.post("http://127.0.0.1:5000/api/register", data);
                     console.log("Response:", response.data);
-                    setMessage(response.data.message);
+                    setMessage("Poprawnie zarejestrowany");
                 } catch (error) {
                     console.error("Error:", error);
+                    // Kod błędu 400
+                    setMessage("Podana nazwa użytkownika jest już zajęta");
                 }
                 console.log(data);
             } else {
                 setDiffPass(true);
             }
         } else { // Logowanie
+            if(!name || !password){
+                setMessage("Puste pole nazwy użytkownika lub hasła");
+                return;
+            }
             const data = {
-                // action: action,
-                // email: email,
+                email: email,
                 username: name,
                 password: password,
             };
             try {
                 const response = await axios.post("http://127.0.0.1:5000/api/login", data);
-                // console.log("Response:", response);
                 console.log("Response:", response.data);    
                 // console.log("Response:", response.data.token);
 
@@ -104,7 +113,9 @@ const LoginSignup = () => {
                 if( sessionStorage.getItem('token') ) setToken(true);       
 
             } catch (error) {
-                console.error("Error:", error);
+                console.error("Error:", error.response.status);
+                // Kod błędu 401
+                setMessage("Niepoprawny login lub hasło");
             }
             console.log(data);
         }

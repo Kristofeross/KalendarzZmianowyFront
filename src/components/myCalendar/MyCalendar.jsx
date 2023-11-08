@@ -20,6 +20,7 @@ const MyCalendar = () => {
   const [isCurrentEvent, setIsCurrenEvent] = useState(true);
   const [hours, setHours] = useState(1);
   const [items, setItems] = useState([]);
+  const [message, setMessage] = useState("");
 
   // Do wylogowania
   const handleLogout = () => {
@@ -62,7 +63,7 @@ const MyCalendar = () => {
       }
     })
     .then(response => {
-      console.log('Sukces', response)
+      console.log('Sukces', response.data)
       setItems(response.data);
     })
     .catch(error => {
@@ -82,7 +83,9 @@ const MyCalendar = () => {
     // Na wyświetlenie oraz wysłanie daty
     stringDate(date);
     // Do wyjścia z aktualizacji wydarzenia
-    setIsCurrenEvent(true)
+    setIsCurrenEvent(true);
+    //
+    setMessage("");
   };
 
   // Do poprawnego wyświetlania danych
@@ -99,6 +102,12 @@ const MyCalendar = () => {
   // Do obsługi wydarzeń
 
   const handleAddEvent = () => {
+    // console.log(date);
+    if(hours > 16 || hours < 1){
+      setMessage("Wprowadź liczbę godzin w przedziale 1-16");
+      return;
+    }
+
     const data = {
       // date: date,
       date: selectedDate,
@@ -131,8 +140,8 @@ const MyCalendar = () => {
           work_hours: getResponse.data.work_hours,
         };
         setItems([...items, newItem]);
-      
-        // setIsEventExist(false);
+        
+        setMessage("");
       })
       .catch(getError => {
         console.error('Błąd podczas pobierania danych', getError);
@@ -145,7 +154,7 @@ const MyCalendar = () => {
   }
 
   const handleToUpdateSpace = () => {
-    const selectedItem = items.find((item) => item.date === selectedDate);
+    const selectedItem = items.find( item => item.date === selectedDate);
     if (selectedItem) {
       setSelectedEvent(selectedItem.entry_type);
       setHours(selectedItem.work_hours);
@@ -154,12 +163,17 @@ const MyCalendar = () => {
   }
 
   const handleUpdateEvent = () => {
+    if(hours > 16 || hours < 1){
+      setMessage("Wprowadź liczbę godzin w przedziale 1-16");
+      return;
+    }
+
     const data = {
       date: selectedDate,
       entry_type: selectedEvent,
       work_hours: parseFloat(hours)
     }
-    // console.log('Dane do wysłania',data);
+    console.log('Dane do wysłania',data);
 
     const idEvent = items.find((item) => item.date === selectedDate)?._id;
 
@@ -194,6 +208,9 @@ const MyCalendar = () => {
         );
 
         setItems(updatedItems);
+
+        setMessage("");
+
       })
       .catch(getError => {
         console.error('Błąd podczas pobierania danych', getError);
@@ -203,6 +220,7 @@ const MyCalendar = () => {
     })
     .catch(error =>{
       console.error('Błąd', error);
+      setMessage("Nie zostały wprowadzone żadne zmiany");
     })
   }
 
@@ -227,6 +245,7 @@ const MyCalendar = () => {
 
   const handleCancelAction = () => {
     setIsCurrenEvent(true)
+    setMessage("");
   }
 
 
@@ -310,7 +329,9 @@ const MyCalendar = () => {
                     )
                   }
                 </div>
-
+                {
+                  message ? <p>{message}</p> : null
+                }
                 <div style={styles} onClick={handleAddEvent} >Wyślij</div>
               </div>
             ): isCurrentEvent ? (
@@ -343,6 +364,9 @@ const MyCalendar = () => {
                       )
                     }
                   </div>
+                  {
+                    message ? <p>{message}</p> : null
+                  }
                   <div style={buttonsStyle}>
                     <div style={styles} onClick={handleCancelAction} >Anuluj</div>
                     <div style={styles} onClick={handleUpdateEvent} >Potwierdź</div>
