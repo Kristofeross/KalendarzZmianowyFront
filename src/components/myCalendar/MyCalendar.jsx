@@ -103,7 +103,7 @@ const MyCalendar = () => {
 
   const handleAddEvent = () => {
     // console.log(date);
-    if(hours > 16 || hours < 1){
+    if( selectedEvent === 'work' && (hours > 16 || hours < 1 )){
       setMessage("Wprowadź liczbę godzin w przedziale 1-16");
       return;
     }
@@ -163,7 +163,7 @@ const MyCalendar = () => {
   }
 
   const handleUpdateEvent = () => {
-    if(hours > 16 || hours < 1){
+    if(selectedEvent === 'work' && ( hours > 16 || hours < 1 ) ){
       setMessage("Wprowadź liczbę godzin w przedziale 1-16");
       return;
     }
