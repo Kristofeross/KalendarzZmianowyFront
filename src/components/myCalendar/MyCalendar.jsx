@@ -83,7 +83,7 @@ const MyCalendar = () => {
     setSelectedDate( stringDate(date) );
     // Do wyjścia z aktualizacji wydarzenia
     setIsCurrenEvent(true);
-    
+
     setMessage("");
   };
 
@@ -295,11 +295,31 @@ const MyCalendar = () => {
         if (item.date === selectedDate) {
           return (
             <div key={item._id}>
-              <p>ID: {item._id}</p>
-              <p>Data: {item.date}</p>
-              <p>Typ: {item.entry_type}</p>
-
-              { item.entry_type === "work" && <p>Godziny pracy: {item.work_hours}</p>}
+              { item.entry_type === "work" && 
+                <div>
+                  <h2>Typ zdarzenia</h2>
+                  <p>Praca</p>
+                  <p>Godziny pracy: {item.work_hours}</p>
+                </div>
+              }
+              { item.entry_type === "vacation" && 
+                <div>
+                  <h2>Typ zdarzenia</h2>
+                  <p>Urlop</p>
+                </div>
+              }
+              { item.entry_type === "business_trip" && 
+                <div>
+                  <h2>Typ zdarzenia</h2>
+                  <p>Wyjazd służbowy</p>
+                </div>
+              }
+              { item.entry_type === "sick_leave" && 
+                <div>
+                  <h2>Typ zdarzenia</h2>
+                  <p>Zwolnienie lekarskie</p>
+                </div>
+              }
             </div>
           );
         } else {
@@ -343,14 +363,6 @@ const MyCalendar = () => {
               <div>
                 <div>Dodawanie wydarzenia</div>
                 <div className="eventSpace">
-                  {/* <div>
-                    <select value={selectedEvent} name='selectedEvent' onChange={handleChangeSelect}>
-                      <option value="work">Praca</option>
-                      <option value="vacation">Urlop</option>     
-                    </select>
-
-                  </div> */}
-
                   <div>
                     <label>
                       <input
@@ -417,7 +429,9 @@ const MyCalendar = () => {
                 <div>
                   <div>Aktualne wydarzenia</div>
                   <div className='eventSpace'>
+
                   {showData()}
+
                   </div>
                   <div style={buttonsStyle}>
                     <div style={styles} onClick={handleToUpdateSpace} >Aktualizuj</div>
