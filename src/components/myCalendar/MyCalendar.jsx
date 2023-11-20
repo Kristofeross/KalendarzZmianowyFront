@@ -78,7 +78,6 @@ const MyCalendar = () => {
 
     // Do formularza z godzinami
     if(selectedEvent === 'work') setHours(1);
-    else setHours(null);
     
     // Na wyświetlenie oraz wysłanie daty
     stringDate(date);
@@ -108,11 +107,15 @@ const MyCalendar = () => {
       return;
     }
 
+    let toWorkHours = null;
+    if (selectedEvent === "work") toWorkHours = parseFloat(hours);
+    else toWorkHours = null;
+
     const data = {
       // date: date,
       date: selectedDate,
       entry_type: selectedEvent,
-      work_hours: parseFloat(hours)
+      work_hours: toWorkHours
     }
     axios.post('http://127.0.0.1:5000/api/calendar/add', data, {
       headers: {
@@ -168,10 +171,14 @@ const MyCalendar = () => {
       return;
     }
 
+    let toWorkHours = null;
+    if (selectedEvent === "work") toWorkHours = parseFloat(hours);
+    else toWorkHours = null;
+
     const data = {
       date: selectedDate,
       entry_type: selectedEvent,
-      work_hours: parseFloat(hours)
+      work_hours: toWorkHours
     }
     console.log('Dane do wysłania',data);
 
@@ -199,8 +206,8 @@ const MyCalendar = () => {
         const updatedItem = {
           _id: getResponse.data._id,
           date: newDate,
-          entry_type: selectedEvent,
-          work_hours: parseFloat(hours),
+          entry_type: getResponse.data.entry_type,
+          work_hours: getResponse.data.work_hours
         };
 
         const updatedItems = items.map(item =>
@@ -254,8 +261,7 @@ const MyCalendar = () => {
     // console.log(e.target.value);
     const selectedValue = e.target.value;
     setSelectedEvent(selectedValue);
-    if (selectedValue === 'vacation') setHours(null);
-    // else setHours(1);
+    setHours(1);
   }
   const handleHoursChange = e => {
     // console.log(e.target.value);
@@ -271,7 +277,8 @@ const MyCalendar = () => {
               <p>ID: {item._id}</p>
               <p>Data: {item.date}</p>
               <p>Typ: {item.entry_type}</p>
-              <p>Godziny pracy: {item.work_hours}</p>
+
+              { item.entry_type === "work" && <p>Godziny pracy: {item.work_hours}</p>}
             </div>
           );
         } else {
@@ -283,7 +290,7 @@ const MyCalendar = () => {
 
   // console.log(date);
   // console.log(selectedDate);
-  // console.log(items);
+  console.log(items);
 
   return (
     // Aktualna zawartość
