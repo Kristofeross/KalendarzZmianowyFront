@@ -50,3 +50,21 @@
   width: 100%;
   height: 200px;
 }
+
+/* Istotne kolorki do wydarzeń */
+/* Dodaj odpowiednie kolory dla różnych typów wydarzeń */
+.work-event-color {
+  background-color: red; /* Kolor dla pracy */
+}
+
+.vacation-event-color {
+  background-color: blue; /* Kolor dla urlopu */
+}
+
+.business-trip-event-color {
+  background-color: green; /* Kolor dla wyjazdu służbowego */
+}
+
+.sick-leave-event-color {
+  background-color: purple; /* Kolor dla zwolnienia lekarskiego */
+}

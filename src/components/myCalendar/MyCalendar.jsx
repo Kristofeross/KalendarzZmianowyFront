@@ -46,13 +46,14 @@ const MyCalendar = () => {
     const month = ('0' + (date.getMonth() + 1)).slice(-2);
     const year = date.getFullYear();
     const formattedDate = `${year}-${month}-${day}`;
-    setSelectedDate(formattedDate);
+
+    return formattedDate;
   }
 
   // Do pierwszego wyświetlenia daty
   useEffect(() => {
     const todayDate = new Date();
-    stringDate(todayDate);
+    setSelectedDate( stringDate(todayDate) );
   }, []);
 
   // Pobranie danych na początku
@@ -73,17 +74,16 @@ const MyCalendar = () => {
 
 
   // Do zmiany daty
-  const onChange = (date) => {
+  const onChange = date => {
     setDate(date);
 
     // Do formularza z godzinami
     if(selectedEvent === 'work') setHours(1);
-    
-    // Na wyświetlenie oraz wysłanie daty
-    stringDate(date);
+    // Na wyświetlania oraz wysłanie daty
+    setSelectedDate( stringDate(date) );
     // Do wyjścia z aktualizacji wydarzenia
     setIsCurrenEvent(true);
-    //
+    
     setMessage("");
   };
 
@@ -93,6 +93,25 @@ const MyCalendar = () => {
     isEventFound ? setIsEventExist(false) : setIsEventExist(true);
   }, [selectedDate, items]);
 
+  // Do poinformowaniu o wydarzeniach 
+  const getEventColor = date =>{
+    const eventForDate = items.find(item => item.date === date);
+    if (eventForDate) {
+      switch (eventForDate.entry_type) {
+        case 'work':
+          return 'work-event-color';
+        case 'vacation':
+          return 'vacation-event-color';
+        case 'business_trip':
+          return 'business-trip-event-color';
+        case 'sick_leave':
+          return 'sick-leave-event-color';
+        default:
+          return '';
+      }
+    }
+    return '';
+  }
   
   // Podreczne do styli
   const styles = {cursor: 'pointer',border: '1px solid #000',padding: '5px',margin: '2px 0'};
@@ -244,6 +263,8 @@ const MyCalendar = () => {
       const updatedItems = items.filter(item => item._id !== idEvent);
       setItems(updatedItems);
 
+      setHours(1);
+
     })
     .catch(error => {
       console.error('Błąd', error);
@@ -259,9 +280,9 @@ const MyCalendar = () => {
   // Do formularzu
   const handleChangeSelect = e =>{
     // console.log(e.target.value);
-    const selectedValue = e.target.value;
-    setSelectedEvent(selectedValue);
+    setSelectedEvent(e.target.value);
     setHours(1);
+    setMessage("")
   }
   const handleHoursChange = e => {
     // console.log(e.target.value);
@@ -290,7 +311,7 @@ const MyCalendar = () => {
 
   // console.log(date);
   // console.log(selectedDate);
-  console.log(items);
+  // console.log(items);
 
   return (
     // Aktualna zawartość
@@ -304,6 +325,7 @@ const MyCalendar = () => {
           formatShortWeekday={(locale, date) =>
             new Intl.DateTimeFormat('pl', { weekday: 'long' }).format(date) // Format na pełne nazwy dni tygodnia
           }
+          tileClassName={ ({ date }) => getEventColor( stringDate(date) )}
         />
       </div>
       <div className="second-div">
@@ -321,11 +343,25 @@ const MyCalendar = () => {
               <div>
                 <div>Dodawanie wydarzenia</div>
                 <div className="eventSpace">
-                  <div>
+                  {/* <div>
                     <select value={selectedEvent} name='selectedEvent' onChange={handleChangeSelect}>
                       <option value="work">Praca</option>
                       <option value="vacation">Urlop</option>     
                     </select>
+
+                  </div> */}
+
+                  <div>
+                    <label>
+                      <input
+                        type="radio"
+                        name="selectedEvent"
+                        value="work"
+                        checked={selectedEvent === 'work'}
+                        onChange={handleChangeSelect}
+                      />
+                      Praca
+                    </label>
                   </div>
                   {
                     selectedEvent === 'work' && (
@@ -335,6 +371,42 @@ const MyCalendar = () => {
                       </div>
                     )
                   }
+                  <div>
+                    <label>
+                      <input
+                        type="radio"
+                        name="selectedEvent"
+                        value="vacation"
+                        checked={selectedEvent === 'vacation'}
+                        onChange={handleChangeSelect}
+                      />
+                      Urlop
+                    </label>
+                  </div>
+                  <div>
+                    <label>
+                      <input
+                        type="radio"
+                        name="selectedEvent"
+                        value="business_trip"
+                        checked={selectedEvent === 'business_trip'}
+                        onChange={handleChangeSelect}
+                      />
+                      Wyjazd służbowy
+                    </label>
+                  </div>
+                  <div>
+                    <label>
+                      <input
+                        type="radio"
+                        name="selectedEvent"
+                        value="sick_leave"
+                        checked={selectedEvent === 'sick_leave'}
+                        onChange={handleChangeSelect}
+                      />
+                      Zwolnienie lekarskie
+                    </label>
+                  </div>
                 </div>
                 {
                   message ? <p>{message}</p> : null
@@ -357,10 +429,16 @@ const MyCalendar = () => {
                   <div>Akualizowane wydarzenia</div>
                   <div className='eventSpace'>
                     <div>
-                      <select value={selectedEvent} name='selectedEvent' onChange={handleChangeSelect}>
-                        <option value="work">Praca</option>
-                        <option value="vacation">Urlop</option>     
-                      </select>
+                      <label>
+                        <input
+                          type="radio"
+                          name="selectedEvent"
+                          value="work"
+                          checked={selectedEvent === 'work'}
+                          onChange={handleChangeSelect}
+                        />
+                        Praca
+                      </label>
                     </div>
                     {
                       selectedEvent === 'work' && (
@@ -370,6 +448,42 @@ const MyCalendar = () => {
                         </div>
                       )
                     }
+                    <div>
+                      <label>
+                        <input
+                          type="radio"
+                          name="selectedEvent"
+                          value="vacation"
+                          checked={selectedEvent === 'vacation'}
+                          onChange={handleChangeSelect}
+                        />
+                        Urlop
+                      </label>
+                    </div>
+                    <div>
+                      <label>
+                        <input
+                          type="radio"
+                          name="selectedEvent"
+                          value="business_trip"
+                          checked={selectedEvent === 'business_trip'}
+                          onChange={handleChangeSelect}
+                        />
+                        Wyjazd służbowy
+                      </label>
+                    </div>
+                    <div>
+                      <label>
+                        <input
+                          type="radio"
+                          name="selectedEvent"
+                          value="sick_leave"
+                          checked={selectedEvent === 'sick_leave'}
+                          onChange={handleChangeSelect}
+                        />
+                        Zwolnienie lekarskie
+                      </label>
+                    </div>
                   </div>
                   {
                     message ? <p>{message}</p> : null
