@@ -249,7 +249,7 @@ const MyCalendar = () => {
   }
 
 
-  // Do formularzu
+  // Do formularza
   const handleChangeSelect = e =>{
     // console.log(e.target.value);
     const selectedValue = e.target.value;
@@ -289,7 +289,6 @@ const MyCalendar = () => {
     // Aktualna zawartość
     <div className="container">   
       <div className="calendar">
-        <h1>Kalendarz</h1>
         <Calendar
           onChange={onChange}
           value={date}
