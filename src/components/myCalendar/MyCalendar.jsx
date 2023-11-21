@@ -64,7 +64,7 @@ const MyCalendar = () => {
       }
     })
     .then(response => {
-      console.log('Sukces', response.data)
+      // console.log('Sukces', response.data)
       setItems(response.data);
     })
     .catch(error => {
@@ -99,13 +99,13 @@ const MyCalendar = () => {
     if (eventForDate) {
       switch (eventForDate.entry_type) {
         case 'work':
-          return 'work-event-color';
+          return 'work-event';
         case 'vacation':
-          return 'vacation-event-color';
+          return 'vacation-event';
         case 'business_trip':
-          return 'business-trip-event-color';
+          return 'business-trip-event';
         case 'sick_leave':
-          return 'sick-leave-event-color';
+          return 'sick-leave-event';
         default:
           return '';
       }
@@ -142,7 +142,7 @@ const MyCalendar = () => {
       }
     })
     .then(response => {
-      console.log('Sukces', response);
+      // console.log('Sukces', response);
 
       axios.get(`http://127.0.0.1:5000/api/calendar/getById/${response.data}`, {
         headers: {
@@ -150,7 +150,7 @@ const MyCalendar = () => {
         }
       })
       .then(getResponse => {
-        console.log('Dane pobrane', getResponse.data);
+        // console.log('Dane pobrane', getResponse.data);
   
         const dateToChange = getResponse.data.date;
         const newDate = dateToChange.substring(0, 10);
@@ -199,7 +199,7 @@ const MyCalendar = () => {
       entry_type: selectedEvent,
       work_hours: toWorkHours
     }
-    console.log('Dane do wysłania',data);
+    // console.log('Dane do wysłania',data);
 
     const idEvent = items.find((item) => item.date === selectedDate)?._id;
 
@@ -209,7 +209,7 @@ const MyCalendar = () => {
       }
     })
     .then(response => {
-      console.log('Sukces', response);
+      // console.log('Sukces', response);
 
       axios.get(`http://127.0.0.1:5000/api/calendar/getById/${idEvent}`, {
         headers: {
@@ -217,7 +217,7 @@ const MyCalendar = () => {
         }
       })
       .then(getResponse => {
-        console.log('Dane pobrane', getResponse.data);
+        // console.log('Dane pobrane', getResponse.data);
   
         const dateToChange = getResponse.data.date;
         const newDate = new Date(dateToChange).toISOString().split('T')[0];
@@ -258,7 +258,7 @@ const MyCalendar = () => {
       }
     })
     .then(response => {
-      console.log('Sukces', response);
+      // console.log('Sukces', response);
 
       const updatedItems = items.filter(item => item._id !== idEvent);
       setItems(updatedItems);
@@ -337,7 +337,6 @@ const MyCalendar = () => {
     // Aktualna zawartość
     <div className="container">   
       <div className="calendar">
-        <h1>Kalendarz</h1>
         <Calendar
           onChange={onChange}
           value={date}

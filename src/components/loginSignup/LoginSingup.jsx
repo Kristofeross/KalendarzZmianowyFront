@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import "./LoginSignup.css";
+import "../../styles/LoginSignup.css";
 import axios from "axios";
 
 import user_icon from '../assets/person.png';
@@ -98,7 +98,7 @@ const LoginSignup = () => {
             };
             try {
                 const response = await axios.post("http://127.0.0.1:5000/api/login", data);
-                console.log("Response:", response.data);    
+                // console.log("Response:", response.data);    
 
                 // Za pomocą sessionStorage
                 sessionStorage.setItem('token', response.data.token);
@@ -139,6 +139,12 @@ const LoginSignup = () => {
                 </div>
                 <div className="inputs">
 
+                    <div className="submit-container">
+                        <div className={action === "Logowanie" ? "submit gray" : "submit"} onClick={() => handleChangeForm("Rejestracja")}>Zarejestruj się</div>
+                        <div className={action === "Rejestracja" ? "submit gray" : "submit"} onClick={() => handleChangeForm("Logowanie")}>Zaloguj się</div> 
+                    </div>
+                    {message ? <p>{message}</p> : null }
+
                     <div className="input">
                         <img src={user_icon} alt="" />
                         <input type="text" placeholder="Nazwa użytkownika" value={name} onChange={handleChangeInputs} name="name" />
@@ -166,11 +172,8 @@ const LoginSignup = () => {
                         Zapomniałeś hasła? <span>Naciśnij tu!</span>
                     </div>
                 )}      
-                {message ? <p>{message}</p> : null }
-                <div className="submit-container">
-                    <div className={action === "Logowanie" ? "submit gray" : "submit"} onClick={() => handleChangeForm("Rejestracja")}>Zarejestruj się</div>
-                    <div className={action === "Rejestracja" ? "submit gray" : "submit"} onClick={() => handleChangeForm("Logowanie")}>Zaloguj się</div> 
-                </div>
+                
+                
                 <div className="submit-container2">
                     <div className="submit" onClick={handleFormSubmit}>Enter</div>
                 </div>
