@@ -9,7 +9,7 @@ body {
 }
 
 .container {
-  width: 75%;
+  width: 100%;
   height: 100vh;
   margin: 0 auto;
   display: flex;
@@ -19,9 +19,13 @@ body {
 .calendar {
   /* width: 100%; */
   width: 72%;
+  /* flex: 0.72; */
   padding: 20px;
   background-color: rgb(255, 255, 255);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.full-calendar{
+  width: 100%;
 }
 
 .react-calendar {
@@ -40,6 +44,7 @@ body {
 
 .second-div {
   width: 28%;
+  /* flex: 0.28; */
   padding: 20px;
   background-color: rgb(255, 255, 255);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

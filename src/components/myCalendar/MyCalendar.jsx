@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import { useNavigate } from 'react-router-dom';
-import { Tooltip } from 'react-tooltip';
 import axios from 'axios';
 import 'react-calendar/dist/Calendar.css'; 
 import '../../styles/MyCalendar.css';
@@ -19,6 +18,7 @@ const MyCalendar = () => {
   const [logout, setLogout] = useState(false);
   const [selectedDate, setSelectedDate] = useState("")
   const navigate = useNavigate();
+  const [sidePanel, setSidePanel] = useState(false);
 
   // Do Cruda
   const [isEventExist, setIsEventExist] = useState(true);
@@ -92,7 +92,10 @@ const MyCalendar = () => {
     setIsCurrenEvent(true);
     setDeleteConfirm(false);
     setMessage("");
+
+    setSidePanel(true);
   };
+
 
   // Do poprawnego wyświetlania danych
   useEffect(() => {
@@ -421,53 +424,14 @@ const MyCalendar = () => {
   const monthlySummary = getMonthlySummary();
 
 
-  // Nowa funkcja do uzyskania zawartości dla konkretnego kafelka
-  // const getTileContent = (date, tooltip) => {
-  //   const eventForDate = items.find(item => item.date === date);
+  
 
-  //   if (eventForDate) {
-  //     let content = '';
-  //     switch (eventForDate.entry_type) {
-  //       case 'work':
-  //         content = `Praca - ${eventForDate.work_hours}`;
-  //         break;
-  //       case 'vacation':
-  //         content = 'Urlop';
-  //         break;
-  //       case 'sick_leave':
-  //           content = 'Zwolnienie lekarskie';
-  //           break;
-  //         case 'business_trip':
-  //           content = 'Wyjazd służbowy';
-  //           break; 
-  //     }
-
-  //     // <Tooltip id="eventTooltip" />
-
-  //     return (
-  //       <div 
-  //         // data-tooltip-id="eventTooltip"
-  //         // data-tooltip-content={content}
-  //         // data-tooltip-place="top"
-  //       >
-  //         C
-  //       </div>
-  //     );
-  //   }
-
-  //   return ""
-  // };
-
-  // console.log(date);
-  // console.log(selectedDate);
-  // console.log(items);
-  // const tooltip = <Tooltip id="eventTooltip" />
 
 
   return (
     // Aktualna zawartość
     <div className="container"> 
-      <div className="calendar">
+      <div className={`calendar ${sidePanel ? '' : 'full-calendar'}`}>
 
         <Calendar
           onChange={onChange}
@@ -477,78 +441,24 @@ const MyCalendar = () => {
             new Intl.DateTimeFormat('pl', { weekday: 'long' }).format(date) // Format na pełne nazwy dni tygodnia
           }
           tileClassName={ ({ date }) => getEventColor( stringDate(date) )}
-          // tileContent={({ date }, tooltip) => getTileContent( stringDate(date) , tooltip)}
 
         />
 
-        {/* <Tooltip anchorSelect=".eventTooltip" place="left">
-          Prosze działaj
-        </Tooltip> */}
-
       </div>
 
-      <div className="second-div">
-      
-        {/* Górna część pojemnika - Nagłówki */}
-        <div className='upBarEventSpace'>{selectedDate}</div>
-        {/* Dolna część pojemnika - wydarzenia */}
-        <div className='downBarEventSpace'>
+      {sidePanel && 
+        <div className="second-div">
+        
+          {/* Górna część pojemnika - Nagłówki */}
+          <div className='upBarEventSpace'>{selectedDate}</div>
+          {/* Dolna część pojemnika - wydarzenia */}
+          <div className='downBarEventSpace'>
 
-          { isEventExist
-            ?(
-              <div>
-                <div>Dodawanie wydarzenia</div>
-                <div className="eventSpace">
-                  <select value={selectedEvent} onChange={handleChangeSelect}>
-                    <option value="work">Praca</option>
-                    <option value="vacation">Urlop</option>
-                    <option value="business_trip">Wyjazd służbowy</option>
-                    <option value="sick_leave">Zwolnienie lekarskie</option>
-                  </select>
-                  {
-                    selectedEvent === 'work' && (
-                      <div>
-                        <label htmlFor="">Liczba godzin: </label>
-                        <input type="number" value={hours} onChange={handleHoursChange} />
-                      </div>
-                    )
-                  }
-
-                </div>
-                {
-                  message ? <p>{message}</p> : null
-                }
-                <div className='styles' onClick={handleAddEvent} >Dodaj</div>
-              </div>
-            ): isCurrentEvent ? (
+            { isEventExist
+              ?(
                 <div>
-                  {deleteConfirm ? 
-                    <>
-                      <div>Aktualne wydarzenia</div>
-                      <h3>Czy na pewno chcesz usunąć?</h3>
-                      <div className="buttonsStyle">     
-                        <div className='styles' onClick={()=>handleCancelAction("delete")} >Anuluj</div>
-                        <div className='styles' onClick={handleDeleteEvent} >Potwierdź</div>
-                      </div>
-                    </>
-                    :
-                    <>
-                      <div>Aktualne wydarzenia</div>
-                      <div className='eventSpace'>
-                        {showData()}
-                      </div>
-
-                      <div className="buttonsStyle">     
-                        <div className='styles' onClick={()=>setDeleteConfirm(true)} >Usuń</div>
-                        <div className='styles' onClick={handleToUpdateSpace} >Aktualizuj</div>
-                      </div>
-                    </>
-                  }
-                </div>  
-              ): (
-                <div>
-                  <div>Akualizowane wydarzenia</div>
-                  <div className='eventSpace'>
+                  <div>Dodawanie wydarzenia</div>
+                  <div className="eventSpace">
                     <select value={selectedEvent} onChange={handleChangeSelect}>
                       <option value="work">Praca</option>
                       <option value="vacation">Urlop</option>
@@ -563,35 +473,85 @@ const MyCalendar = () => {
                         </div>
                       )
                     }
+
                   </div>
                   {
                     message ? <p>{message}</p> : null
                   }
-                  <div className='buttonsStyle'>
-                    <div className='styles' onClick={()=>handleCancelAction("update")}  >Anuluj</div>
-                    <div className='styles' onClick={handleUpdateEvent} >Potwierdź</div>
-                  </div>
+                  <div className='styles' onClick={handleAddEvent} >Dodaj</div>
                 </div>
-              )
-          }
+              ): isCurrentEvent ? (
+                  <div>
+                    {deleteConfirm ? 
+                      <>
+                        <div>Aktualne wydarzenia</div>
+                        <h3>Czy na pewno chcesz usunąć?</h3>
+                        <div className="buttonsStyle">     
+                          <div className='styles' onClick={()=>handleCancelAction("delete")} >Anuluj</div>
+                          <div className='styles' onClick={handleDeleteEvent} >Potwierdź</div>
+                        </div>
+                      </>
+                      :
+                      <>
+                        <div>Aktualne wydarzenia</div>
+                        <div className='eventSpace'>
+                          {showData()}
+                        </div>
+
+                        <div className="buttonsStyle">     
+                          <div className='styles' onClick={()=>setDeleteConfirm(true)} >Usuń</div>
+                          <div className='styles' onClick={handleToUpdateSpace} >Aktualizuj</div>
+                        </div>
+                      </>
+                    }
+                  </div>  
+                ): (
+                  <div>
+                    <div>Akualizowane wydarzenia</div>
+                    <div className='eventSpace'>
+                      <select value={selectedEvent} onChange={handleChangeSelect}>
+                        <option value="work">Praca</option>
+                        <option value="vacation">Urlop</option>
+                        <option value="business_trip">Wyjazd służbowy</option>
+                        <option value="sick_leave">Zwolnienie lekarskie</option>
+                      </select>
+                      {
+                        selectedEvent === 'work' && (
+                          <div>
+                            <label htmlFor="">Liczba godzin: </label>
+                            <input type="number" value={hours} onChange={handleHoursChange} />
+                          </div>
+                        )
+                      }
+                    </div>
+                    {
+                      message ? <p>{message}</p> : null
+                    }
+                    <div className='buttonsStyle'>
+                      <div className='styles' onClick={()=>handleCancelAction("update")}  >Anuluj</div>
+                      <div className='styles' onClick={handleUpdateEvent} >Potwierdź</div>
+                    </div>
+                  </div>
+                )
+            }
+
+          </div>
+
+          <SummationSpace monthlySummary={monthlySummary} />
+          <NextDaysInfo getNextDaysInfo={getNextDaysInfo} />
+          <ColorLegend />
+
+          <div className={"exitButton"} onClick={()=> setSidePanel(false)}>
+            Zwiń
+          </div>   
+          
+          <div className={"exitButton"} onClick={handleLogout}>
+            <img src={door_icon} alt="" />
+            Wyloguj
+          </div>
 
         </div>
-
-        <SummationSpace monthlySummary={monthlySummary} />
-        <NextDaysInfo getNextDaysInfo={getNextDaysInfo} />
-        <ColorLegend />
-
-        
-        <div className={"exitButton"} onClick={handleLogout} data-tooltip-id="my-tooltip"
-              data-tooltip-content="Wyloguj"
-              data-tooltip-place="top"
-        >
-          <img src={door_icon} alt="" />
-          Wyloguj
-        </div>
-        <Tooltip id='my-tooltip' />
-
-      </div>   
+      } 
     </div>
   );
 };
