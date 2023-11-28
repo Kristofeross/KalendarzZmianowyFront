@@ -17,7 +17,8 @@ body {
 }
 
 .calendar {
-  width: 100%;
+  /* width: 100%; */
+  width: 72%;
   padding: 20px;
   background-color: rgb(255, 255, 255);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -47,7 +48,6 @@ body {
 }
 
 .upBarEventSpace {
-  cursor: pointer;
   padding: 10px;
   background-color: rgb(129, 143, 180);
   color: #fff;
@@ -55,6 +55,7 @@ body {
   font-weight: bold;
   margin-bottom: 10px;
 }
+
 
 .downBarEventSpace {
   flex-grow: 1;
@@ -72,7 +73,24 @@ body {
   color: #fff;
   text-align: center;
   font-weight: bold;
-  margin-top: 10px;
+  margin: 10px 3px 0;
+  width: 50%;
+}
+
+.exitButton {
+  cursor: pointer;
+  padding: 10px;
+  background-color: rgb(129, 143, 180);
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+  margin: 10px 3px 0;
+}
+
+.exitButton img {
+  width: 25px;
+  height: 16px;
+  color: grey;
 }
 
 .buttonsStyle {
