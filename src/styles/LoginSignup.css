@@ -76,18 +76,6 @@ body{
     font-size: 19px;
 }
 
-.forgot-password{
-    padding-left: 62px;
-    margin-top: 27px;
-    color: rgb(54, 48, 98);
-    font-size: 18px;
-}
-
-.forgot-password span{
-    color: rgb(129, 143, 180);
-    cursor: pointer;
-}
-
 .submit-container{
     display: flex;
     gap: 30px;

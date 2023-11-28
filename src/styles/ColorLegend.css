@@ -1,0 +1,25 @@
+.coloLegend{
+    width: 100%;
+}
+
+.colorLegendEvent{
+    width: 100%;
+    margin: 3px;
+    text-align: center;
+}
+
+.workColor{
+    background-color: rgb(220, 90, 90);
+}
+
+.vacationColor{
+    background-color: rgb(129, 129, 206);
+}
+
+.business-tripColor{
+    background-color: rgb(119, 220, 119); 
+}
+
+.sick-leaveColor{
+    background-color: rgb(205, 96, 205); 
+}
