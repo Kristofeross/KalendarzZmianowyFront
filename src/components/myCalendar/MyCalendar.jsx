@@ -431,7 +431,7 @@ const MyCalendar = () => {
   return (
     // Aktualna zawartość
     <div className="container"> 
-      <div className={`calendar ${sidePanel ? '' : 'full-calendar'}`}>
+      <div className={`calendar ${sidePanel ? 'side-panel-open' : 'side-panel-closed'}`}>
 
         <Calendar
           onChange={onChange}
@@ -441,7 +441,9 @@ const MyCalendar = () => {
             new Intl.DateTimeFormat('pl', { weekday: 'long' }).format(date) // Format na pełne nazwy dni tygodnia
           }
           tileClassName={ ({ date }) => getEventColor( stringDate(date) )}
-
+          tileContent={()=>{
+            return <div></div>
+          }}
         />
 
       </div>
@@ -537,9 +539,9 @@ const MyCalendar = () => {
 
           </div>
 
-          <SummationSpace monthlySummary={monthlySummary} />
-          <NextDaysInfo getNextDaysInfo={getNextDaysInfo} />
-          <ColorLegend />
+          {/* <SummationSpace monthlySummary={monthlySummary} /> */}
+          {/* <NextDaysInfo getNextDaysInfo={getNextDaysInfo} /> */}
+          {/* <ColorLegend /> */}
 
           <div className={"exitButton"} onClick={()=> setSidePanel(false)}>
             Zwiń
