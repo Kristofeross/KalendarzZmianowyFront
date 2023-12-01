@@ -1,22 +1,3 @@
-/* @keyframes fadeInOut {
-  from {
-    opacity: 0;
-    transform: translateX(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-@keyframes expandShrink {
-  from {
-    width: 100%;
-  }
-  to {
-    width: 78%;
-  }
-} */
-
 * {
   margin: 0;
   padding: 0;
@@ -39,14 +20,15 @@ body {
   padding: 20px;
   background-color: rgb(255, 255, 255);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 95%;
 }
 
 .calendar.side-panel-open {
-  width: 78%;
+  width: 67%;
 }
 
 .calendar.side-panel-closed {
-  width: 100%;
+  width: 95%;
 }
 
 .react-calendar {
@@ -63,66 +45,132 @@ body {
   width: 15vmin;
 }
 
-.second-div {
+.sidePanel {
   width: 28%;
-  padding: 20px;
   background-color: rgb(255, 255, 255);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
 }
 
-.upBarEventSpace {
-  padding: 10px;
+/* .sidePanelForComponents{
+  margin: 20px;
+  width: 100%;
+} */
+
+.selectedDate {
+  margin: 20px 20px 0;
+  padding: 20px;
+  font-size: 30px;
   background-color: rgb(129, 143, 180);
   color: #fff;
   text-align: center;
   font-weight: bold;
-  margin-bottom: 10px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
+.eventsContainer {
+  margin: 0 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* border: 1px solid #000; */
+}
 
-.downBarEventSpace {
-  flex-grow: 1;
-  overflow-y: auto;
+.titleOfEvent {
+  font-size: 22px;
+  font-weight: bold;
+  padding: 5px 5px 15px;
+  text-align: center;
 }
 
 .eventSpace {
-  margin-top: 10px;
+  padding: 15px;
+  border: 1px solid #ddd; 
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
 }
 
-.styles {
-  cursor: pointer;
+/* Dodatkowe style dla select i input w eventSpace */
+.eventSpace select,
+.eventSpace input {
   padding: 10px;
-  background-color: rgb(129, 143, 180);
-  color: #fff;
-  text-align: center;
-  font-weight: bold;
-  margin: 10px 3px 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.workHours {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.workHours label {
   width: 50%;
-}
-
-.exitButton {
-  cursor: pointer;
-  padding: 10px;
-  background-color: rgb(129, 143, 180);
-  color: #fff;
   text-align: center;
-  font-weight: bold;
-  margin: 10px 3px 0;
 }
 
-.exitButton img {
-  width: 25px;
-  height: 16px;
-  color: grey;
+.workHours input {
+  padding: 10px;
+  width: 50%;
+  box-sizing: border-box;
 }
 
-.buttonsStyle {
+.message {
+  margin-top: 5px;
+  padding: 3px;
+  border: 1px solid #dc3545; /* Kolor obramowania dla warningu (żółty) */
+  background-color: #f8d7da;
+  color: #721c24;; /* Kolor tekstu dla warningu */
+  border-radius: 8px;
+}
+
+.featureContainer{
+  margin: 10px 20px 20px;
+}
+
+/* //////////////////////////////////// */
+.buttonsContainer {
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
 }
+
+.buttonStyle {
+  cursor: pointer;
+  padding: 10px;
+  background-color: rgb(129, 143, 180);
+  color: #fff;
+  text-align: center;
+  font-weight: bold;
+  margin: 10px 3px;
+}
+
+.oneButton {
+  width: 100%;
+}
+
+.twoButtons {
+  width: 50%;
+  /* margin: 10px 3px; */
+  justify-content: space-between;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Pozostałe style dla kalendarza */
 .react-calendar__navigation button {

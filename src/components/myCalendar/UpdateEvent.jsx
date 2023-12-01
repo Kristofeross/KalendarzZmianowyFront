@@ -1,4 +1,5 @@
 import React from 'react';
+import { Message } from './Message';
 
 const UpdateEvent = ({
   selectedEvent,
@@ -10,8 +11,8 @@ const UpdateEvent = ({
   message,
 }) => {
   return (
-    <div className=''>
-      <div>Akualizowane wydarzenia</div>
+    <>
+      <div className='titleOfEvent'>Akualizowane wydarzenie</div>
       <div className='eventSpace'>
         <select value={selectedEvent} onChange={handleChangeSelect}>
             <option value="work">Praca</option>
@@ -20,18 +21,18 @@ const UpdateEvent = ({
             <option value="sick_leave">Zwolnienie lekarskie</option>
         </select>
         {selectedEvent === 'work' && (
-          <div>
+          <div className='workHours'>
             <label htmlFor="">Liczba godzin: </label>
             <input type="number" value={hours} onChange={handleHoursChange} />
           </div>
         )}
+        {message && <Message message={message} />}
       </div>
-      {message && <p>{message}</p>}
-      <div className='buttonsStyle'>
-        <div className='styles' onClick={() => handleCancelAction("update")}>Anuluj</div>
-        <div className='styles' onClick={handleUpdateEvent}>Potwierdź</div>
+      <div className='buttonsContainer'>
+        <div className='buttonStyle twoButtons' onClick={() => handleCancelAction("update")}>Anuluj</div>
+        <div className='buttonStyle twoButtons' onClick={handleUpdateEvent}>Potwierdź</div>
       </div>
-    </div>
+    </>
   );
 };
 

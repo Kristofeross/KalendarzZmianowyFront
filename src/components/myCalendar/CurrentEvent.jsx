@@ -1,4 +1,5 @@
 import React from 'react';
+import DeleteEvent from './DeleteEvent';
 
 const CurrentEvent = ({
   deleteConfirm,
@@ -8,30 +9,26 @@ const CurrentEvent = ({
   showData,
   setDeleteConfirm,
 }) => {
+
+
   return (
-    <div className=''>
+    <>
       {deleteConfirm ? (
-        <>
-            <div>Aktualne wydarzenia</div>
-            <h3>Czy na pewno chcesz usunąć?</h3>
-            <div className="buttonsStyle">     
-                <div className='styles' onClick={()=>handleCancelAction("delete")} >Anuluj</div>
-                <div className='styles' onClick={handleDeleteEvent} >Potwierdź</div>
-            </div>
-        </>
+
+        <DeleteEvent handleCancelAction={handleCancelAction} handleDeleteEvent={handleDeleteEvent} />
       ) : (
         <>
-          <div>Aktualne wydarzenia</div>
+          <div className='titleOfEvent'>Aktualne wydarzenie</div>
           <div className='eventSpace'>
             {showData()}
           </div>
-          <div className="buttonsStyle">
-            <div className='styles' onClick={() => setDeleteConfirm(true)}>Usuń</div>
-            <div className='styles' onClick={handleToUpdateSpace}>Aktualizuj</div>
+          <div className="buttonsContainer">
+            <div className='buttonStyle twoButtons' onClick={() => setDeleteConfirm(true)}>Usuń</div>
+            <div className='buttonStyle twoButtons' onClick={handleToUpdateSpace}>Aktualizuj</div>
           </div>
         </>
       )}
-    </div>
+    </>
   );
 };
 

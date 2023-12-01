@@ -14,5 +14,11 @@ export const ColorLegend = () => (
         <div className="colorLegendEvent sick-leaveColor">
             Zwolnienie lekarskie (fioletowe)
         </div>
+        <div className="colorLegendEvent todayColor">
+            Dzisiejszy dzień (sraczkowaty)
+        </div>
+        <div className="colorLegendEvent selectedColor">
+            Wybrany dzień (mdlący)
+        </div>
     </div>
 )

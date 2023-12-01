@@ -1,0 +1,42 @@
+.thirdDiv{
+    width: 5%;
+}
+.exitPanel {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;  
+}
+
+.exitPanel:hover{
+    background-color: rgb(220, 200, 160); 
+    transition: background-color 0.8s ease;  
+}
+  
+.exitPanel img {
+    width: 40px;
+    height: 32px;
+    color: grey;
+    margin: auto;
+}
+  
+.hamburgerPanel{
+    width: 100%;
+    height: 90%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.hamburgerPanel:hover{
+    background-color: rgb(220, 200, 160);
+    transition: background-color 0.8s ease;   
+}
+
+.hamburgerPanel img {
+    width: 40px;
+    height: 32px;
+    color: grey;
+    margin: auto;
+}

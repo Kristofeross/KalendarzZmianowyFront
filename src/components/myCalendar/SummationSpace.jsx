@@ -1,9 +1,11 @@
+import '../../styles/SummationSpace.css';
+
 export const SummationSpace = props => (
     <div className='summationSpace'>
-          <h4>Podsumowanie miesiąca</h4>
-          <p>Praca: {props.monthlySummary.workEvents} | {props.monthlySummary.totalWorkHours} godzin</p>
-          <p>Urlop: {props.monthlySummary.vacationEvents}</p>
-          <p>Wyjazd służbowy: {props.monthlySummary.businessTripEvents}</p>
-          <p>Zwolnienie lekarskie: {props.monthlySummary.sickLeaveEvents}</p>
+          <div className='summaryTitle'>Podsumowanie miesiąca</div>
+          <div className='summaryItem'>Praca: {props.monthlySummary.workEvents} | {props.monthlySummary.totalWorkHours} godz.</div>
+          <div className='summaryItem'>Urlop: {props.monthlySummary.vacationEvents}</div>
+          <div className='summaryItem'>Wyjazd służbowy: {props.monthlySummary.businessTripEvents}</div>
+          <div className='summaryItem'>Zwolnienie lekarskie: {props.monthlySummary.sickLeaveEvents}</div>
     </div>
 )

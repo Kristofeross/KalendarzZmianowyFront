@@ -1,10 +1,11 @@
-.coloLegend{
-    width: 100%;
+.colorLegend{
+    margin:  10px 3px;
 }
 
 .colorLegendEvent{
     width: 100%;
-    margin: 3px;
+    margin: 5px 0;
+    padding: 5px 0;
     text-align: center;
 }
 
@@ -22,4 +23,12 @@
 
 .sick-leaveColor{
     background-color: rgb(205, 96, 205); 
+}
+
+.todayColor{
+    background-color: rgb(198, 205, 96); 
+}
+
+.selectedColor{
+    background-color: rgb(205, 96, 163); 
 }

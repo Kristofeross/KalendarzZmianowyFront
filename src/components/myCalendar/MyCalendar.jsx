@@ -4,12 +4,16 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import 'react-calendar/dist/Calendar.css'; 
 import '../../styles/MyCalendar.css';
-import door_icon from '../assets/door.png';
 
 //
+import AddEvent from './AddEvent';
+import UpdateEvent from './UpdateEvent';
+import CurrentEvent from './CurrentEvent';
 import { SummationSpace } from './SummationSpace';
 import { NextDaysInfo } from './NextDaysInfo';
 import { ColorLegend } from './ColorLegend';
+import HamburgerMenu from './HamburgerMenu';
+import { ThirdDiv } from './ThirdDiv';
 
 const MyCalendar = () => {
   const tokenUser = sessionStorage.getItem('token');
@@ -305,28 +309,23 @@ const MyCalendar = () => {
           return (
             <div key={item._id}>
               { item.entry_type === "work" && 
-                <div>
-                  <h2>Typ zdarzenia</h2>
-                  <p>Praca</p>
-                  <p>Godziny pracy: {item.work_hours}</p>
+                <div className='currentEventItem'>
+                  Wydarzenie: Praca - {item.work_hours} godz.
                 </div>
               }
               { item.entry_type === "vacation" && 
                 <div>
-                  <h2>Typ zdarzenia</h2>
-                  <p>Urlop</p>
+                  Wydarzenie: Urlop
                 </div>
               }
               { item.entry_type === "business_trip" && 
                 <div>
-                  <h2>Typ zdarzenia</h2>
-                  <p>Wyjazd służbowy</p>
+                  Wydarzenie: Wyjazd służbowy
                 </div>
               }
               { item.entry_type === "sick_leave" && 
                 <div>
-                  <h2>Typ zdarzenia</h2>
-                  <p>Zwolnienie lekarskie</p>
+                  Wydarzenie: Zwolnienie lekarskie
                 </div>
               }
             </div>
@@ -422,14 +421,19 @@ const MyCalendar = () => {
   };
 
   const monthlySummary = getMonthlySummary();
-
-
   
 
-
+  // Do zmiany paneli
+  const toggleSidePanel = () =>{
+    setSidePanel(!sidePanel);
+  }
+  
+  const getCurrentEventItem = () => {
+    return items.find(item => item.date === selectedDate) || null;
+  };
 
   return (
-    // Aktualna zawartość
+
     <div className="container"> 
       <div className={`calendar ${sidePanel ? 'side-panel-open' : 'side-panel-closed'}`}>
 
@@ -449,111 +453,65 @@ const MyCalendar = () => {
       </div>
 
       {sidePanel && 
-        <div className="second-div">
+        <div className="sidePanel">
         
-          {/* Górna część pojemnika - Nagłówki */}
-          <div className='upBarEventSpace'>{selectedDate}</div>
-          {/* Dolna część pojemnika - wydarzenia */}
-          <div className='downBarEventSpace'>
+          {/* <div className='sidePanelForComponents'> */}
 
-            { isEventExist
-              ?(
-                <div>
-                  <div>Dodawanie wydarzenia</div>
-                  <div className="eventSpace">
-                    <select value={selectedEvent} onChange={handleChangeSelect}>
-                      <option value="work">Praca</option>
-                      <option value="vacation">Urlop</option>
-                      <option value="business_trip">Wyjazd służbowy</option>
-                      <option value="sick_leave">Zwolnienie lekarskie</option>
-                    </select>
-                    {
-                      selectedEvent === 'work' && (
-                        <div>
-                          <label htmlFor="">Liczba godzin: </label>
-                          <input type="number" value={hours} onChange={handleHoursChange} />
-                        </div>
-                      )
-                    }
+          <div className='selectedDate'>{selectedDate.split('-').reverse().join('-')}</div>
 
-                  </div>
-                  {
-                    message ? <p>{message}</p> : null
-                  }
-                  <div className='styles' onClick={handleAddEvent} >Dodaj</div>
-                </div>
-              ): isCurrentEvent ? (
-                  <div>
-                    {deleteConfirm ? 
-                      <>
-                        <div>Aktualne wydarzenia</div>
-                        <h3>Czy na pewno chcesz usunąć?</h3>
-                        <div className="buttonsStyle">     
-                          <div className='styles' onClick={()=>handleCancelAction("delete")} >Anuluj</div>
-                          <div className='styles' onClick={handleDeleteEvent} >Potwierdź</div>
-                        </div>
-                      </>
-                      :
-                      <>
-                        <div>Aktualne wydarzenia</div>
-                        <div className='eventSpace'>
-                          {showData()}
-                        </div>
+          <div className='eventsContainer'>
 
-                        <div className="buttonsStyle">     
-                          <div className='styles' onClick={()=>setDeleteConfirm(true)} >Usuń</div>
-                          <div className='styles' onClick={handleToUpdateSpace} >Aktualizuj</div>
-                        </div>
-                      </>
-                    }
-                  </div>  
-                ): (
-                  <div>
-                    <div>Akualizowane wydarzenia</div>
-                    <div className='eventSpace'>
-                      <select value={selectedEvent} onChange={handleChangeSelect}>
-                        <option value="work">Praca</option>
-                        <option value="vacation">Urlop</option>
-                        <option value="business_trip">Wyjazd służbowy</option>
-                        <option value="sick_leave">Zwolnienie lekarskie</option>
-                      </select>
-                      {
-                        selectedEvent === 'work' && (
-                          <div>
-                            <label htmlFor="">Liczba godzin: </label>
-                            <input type="number" value={hours} onChange={handleHoursChange} />
-                          </div>
-                        )
-                      }
-                    </div>
-                    {
-                      message ? <p>{message}</p> : null
-                    }
-                    <div className='buttonsStyle'>
-                      <div className='styles' onClick={()=>handleCancelAction("update")}  >Anuluj</div>
-                      <div className='styles' onClick={handleUpdateEvent} >Potwierdź</div>
-                    </div>
-                  </div>
-                )
+            {isEventExist ? (
+                <AddEvent
+                  selectedEvent={selectedEvent}
+                  hours={hours}
+                  handleChangeSelect={handleChangeSelect}
+                  handleHoursChange={handleHoursChange}
+                  handleAddEvent={handleAddEvent}
+                  message={message}
+                />
+              ) : isCurrentEvent ? (
+                <CurrentEvent
+                  deleteConfirm={deleteConfirm}
+                  handleToUpdateSpace={handleToUpdateSpace}
+                  handleDeleteEvent={handleDeleteEvent}
+                  handleCancelAction={handleCancelAction}
+                  showData={showData}
+                  setDeleteConfirm={setDeleteConfirm}
+                />
+              ) : (
+                <UpdateEvent
+                  selectedEvent={selectedEvent}
+                  hours={hours}
+                  handleChangeSelect={handleChangeSelect}
+                  handleHoursChange={handleHoursChange}
+                  handleUpdateEvent={handleUpdateEvent}
+                  handleCancelAction={handleCancelAction}
+                  message={message}
+                />
+              )
             }
 
+          </div>
+
+          <div className='featureContainer'>
+            <HamburgerMenu monthlySummary={monthlySummary} getNextDaysInfo={getNextDaysInfo}/>
           </div>
 
           {/* <SummationSpace monthlySummary={monthlySummary} /> */}
           {/* <NextDaysInfo getNextDaysInfo={getNextDaysInfo} /> */}
           {/* <ColorLegend /> */}
 
-          <div className={"exitButton"} onClick={()=> setSidePanel(false)}>
-            Zwiń
-          </div>   
-          
-          <div className={"exitButton"} onClick={handleLogout}>
-            <img src={door_icon} alt="" />
-            Wyloguj
-          </div>
+          {/* </div> */}
 
         </div>
       } 
+
+      
+
+      <ThirdDiv handleLogout={handleLogout} toggleSidePanel={toggleSidePanel} sidePanel={sidePanel} />
+
+
     </div>
   );
 };

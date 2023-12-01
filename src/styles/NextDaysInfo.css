@@ -1,0 +1,31 @@
+.nextDaysInfo {
+  border: 1px solid #ddd;
+  margin: 10px 0 20px;
+  border-radius: 8px;
+  background-color: #f4f4f4;
+  overflow: auto;
+}
+
+.infoTitle {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  padding: 8px;
+}
+
+.dayInfo {
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin: 4px;
+}
+
+.dayName {
+  font-size: 16px;
+  font-weight: bold;
+  padding: 1px 8px;
+}
+
+.eventInfo {
+  padding: 1px 8px;
+}
