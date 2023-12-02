@@ -1,13 +1,12 @@
+import DayInfo from './DayInfo';
 import '../../styles/NextDaysInfo.css';
 
-export const NextDaysInfo = props => (
+export const NextDaysInfo = ({nextDays}) => {
+  const dayInfoComponents = nextDays.map(dayInfo => <DayInfo key={dayInfo.date} date={dayInfo.date} name={dayInfo.name} eventInfo={dayInfo.eventInfo} />);
+  return(
     <div className='nextDaysInfo'>
-            <div className='infoTitle'>Najbliższe dni</div>
-            {props.getNextDaysInfo().map(dayInfo => (
-              <div key={dayInfo.date} className='dayInfo'>
-                <div className='dayName'>{dayInfo.name}: {(dayInfo.date).split('-').reverse().join('-')}</div>
-                <div className='eventInfo'>Wydarzenie: {dayInfo.eventInfo}</div>
-              </div>
-            ))}
+      <div className='infoTitle'>Najbliższe dni</div>
+      {dayInfoComponents}
     </div>
-)
+  )
+};

@@ -1,5 +1,6 @@
 import React from 'react';
 import DeleteEvent from './DeleteEvent';
+import DisplayCurrentEvent from './DisplayCurrentEvent';
 
 const CurrentEvent = ({
   deleteConfirm,
@@ -9,24 +10,20 @@ const CurrentEvent = ({
   showData,
   setDeleteConfirm,
 }) => {
-
-
   return (
     <>
       {deleteConfirm ? (
 
-        <DeleteEvent handleCancelAction={handleCancelAction} handleDeleteEvent={handleDeleteEvent} />
+        <DeleteEvent 
+          handleCancelAction={handleCancelAction} 
+          handleDeleteEvent={handleDeleteEvent} 
+        />
       ) : (
-        <>
-          <div className='titleOfEvent'>Aktualne wydarzenie</div>
-          <div className='eventSpace'>
-            {showData()}
-          </div>
-          <div className="buttonsContainer">
-            <div className='buttonStyle twoButtons' onClick={() => setDeleteConfirm(true)}>Usuń</div>
-            <div className='buttonStyle twoButtons' onClick={handleToUpdateSpace}>Aktualizuj</div>
-          </div>
-        </>
+        <DisplayCurrentEvent 
+          handleToUpdateSpace={handleToUpdateSpace} 
+          showData={showData}
+          setDeleteConfirm={setDeleteConfirm}
+        />
       )}
     </>
   );

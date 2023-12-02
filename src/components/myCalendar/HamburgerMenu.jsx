@@ -6,7 +6,7 @@ import { ColorLegend } from './ColorLegend';
 import hamburger_icon from '../assets/menu.png'; 
 import '../../styles/HamburgerMenu.css';
 
-const HamburgerMenu = ({monthlySummary, getNextDaysInfo}) => {
+const HamburgerMenu = ({monthlySummary, nextDays}) => {
 
     const [showHamburgerBar, setShowHamburgerBar] = useState(false);
     const [showNextDaysInfo, setShowNextDaysInfo] = useState(false);
@@ -56,7 +56,7 @@ const HamburgerMenu = ({monthlySummary, getNextDaysInfo}) => {
                 </div>
             }
             {showNextDaysInfo &&
-                <NextDaysInfo getNextDaysInfo={getNextDaysInfo} />
+                <NextDaysInfo nextDays={nextDays} />
             }
             {showSummationSpace &&
                 <SummationSpace monthlySummary={monthlySummary} />

@@ -91,7 +91,6 @@ const LoginSignup = () => {
                 setMessage("Poprawnie zarejestrowany");
             } catch (error) {
                 console.error("Error:", error);
-                // Kod błędu 400
                 setMessage("Podana nazwa użytkownika jest już zajęta");
             }
         } else { // Logowanie
@@ -105,15 +104,12 @@ const LoginSignup = () => {
             };
             try {
                 const response = await axios.post("http://127.0.0.1:5000/api/login", data);
-                // console.log("Response:", response.data);  
 
-                // Za pomocą sessionStorage
                 sessionStorage.setItem('token', response.data.token);
                 if( sessionStorage.getItem('token') ) setToken(true);       
 
             } catch (error) {
                 console.error("Error:", error.response.status);
-                // Kod błędu 401
                 setMessage("Niepoprawny login lub hasło");
             }
         }
@@ -148,7 +144,7 @@ const LoginSignup = () => {
                     <InputField icon={email_icon} type="email" placeholder="Email" value={email} onChange={handleChangeInputs} name="email" />
                 )}
                 <InputField icon={password_icon} type="password" placeholder="Hasło" value={password} onChange={handleChangeInputs} name="password" />
-                {action === "Logowanie" ? null : (
+                {action === "Logowanie" ? <div className="emptySpaceInputs"></div> : (
                     <InputField icon={password_icon} type="password" placeholder="Powtórz hasło" value={repeatedPass} onChange={handleChangeInputs} name="repeatedPass" />
                 )}
             </div>

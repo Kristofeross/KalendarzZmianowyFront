@@ -1,5 +1,7 @@
 import React from 'react';
-import { Message } from './Message';
+import EventForm from './EventForm';
+import Message from './Message';
+import Button from './Button';
 
 const AddEvent = ({
   selectedEvent,
@@ -13,24 +15,17 @@ const AddEvent = ({
     <>
       <div className='titleOfEvent'>Dodawanie wydarzenia</div>
       <div className="eventSpace">
-        <select value={selectedEvent} onChange={handleChangeSelect}>
-            <option value="work">Praca</option>
-            <option value="vacation">Urlop</option>
-            <option value="business_trip">Wyjazd służbowy</option>
-            <option value="sick_leave">Zwolnienie lekarskie</option>
-        </select>
-        {selectedEvent === 'work' && (
-          <div className='workHours'>
-            <label >Liczba godzin: </label>
-            <input type="number" value={hours} onChange={handleHoursChange} />
-          </div>
-        )}
+        <EventForm
+          selectedEvent={selectedEvent}
+          handleChangeSelect={handleChangeSelect}
+          hours={hours}
+          handleHoursChange={handleHoursChange}
+        />
         {message && <Message message={message} />}
       </div>
       
-
       <div className="buttonsContainer">
-        <div className='buttonStyle oneButton' onClick={handleAddEvent} >Dodaj</div>
+        <Button action={handleAddEvent} name={'Dodaj'} />
       </div>
     </>
   );

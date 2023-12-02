@@ -6,7 +6,7 @@ import '../../styles/ThirdDiv.css';
 
 import { Tooltip } from 'react-tooltip';
 
-export const ThirdDiv = ({handleLogout, toggleSidePanel, sidePanel}) => {
+const ThirdDiv = ({handleLogout, toggleSidePanel, sidePanel}) => {
     let accordionTooltip = sidePanel ? 'Zwiń' : 'Rozwiń';
 
     return(
@@ -33,3 +33,5 @@ export const ThirdDiv = ({handleLogout, toggleSidePanel, sidePanel}) => {
         </div>
     )
 };
+
+export default ThirdDiv;

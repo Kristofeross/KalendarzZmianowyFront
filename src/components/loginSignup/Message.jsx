@@ -1,5 +1,5 @@
 export const Message = props => (
     <>
-       { props.message ? <p>{props.message}</p> : null }  
+       { props.message ? <div className="messageLogin">{props.message}</div> : <div className="emptySpaceMessage"></div> }  
     </>
 );

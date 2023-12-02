@@ -1,0 +1,31 @@
+.buttonsContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+  
+.buttonStyle {
+    cursor: pointer;
+    padding: 10px;
+    /* background-color: rgb(67, 85, 133); */
+    background-color: rgb(246, 225, 176);
+    /* color: #fff; */
+    color: #000;
+    text-align: center;
+    font-weight: bold;
+    margin: 10px 3px;
+}
+  
+.oneButton {
+    width: 100%;
+}
+  
+.twoButtons {
+    width: 50%;
+    justify-content: space-between;
+}
+  
+.buttonStyle:hover{
+    /* background-color: rgb(54, 48, 98); */
+    background-color: rgb(220, 207, 175);
+}

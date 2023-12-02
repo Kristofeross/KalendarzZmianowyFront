@@ -2,23 +2,26 @@ import '../../styles/ColorLegend.css';
 
 export const ColorLegend = () => (
     <div className="colorLegend">
-        <div className="colorLegendEvent workColor">
-            Praca (czerwony)
-        </div>
-        <div className="colorLegendEvent vacationColor">
-            Urlop (niebieski)
-        </div>
-        <div className="colorLegendEvent business-tripColor">
-            Wyjazd służbowy (zielony)
-        </div>
-        <div className="colorLegendEvent sick-leaveColor">
-            Zwolnienie lekarskie (fioletowe)
-        </div>
-        <div className="colorLegendEvent todayColor">
-            Dzisiejszy dzień (sraczkowaty)
-        </div>
-        <div className="colorLegendEvent selectedColor">
-            Wybrany dzień (mdlący)
+        <div className='legendTitle'>Legenda kolorów</div>
+        <div className='colorLegendContainer'>
+            <div className="colorLegendEvent workColor">
+                <p>Praca (czerwony)</p>
+            </div>
+            <div className="colorLegendEvent vacationColor">
+                <p>Urlop (źółty)</p>
+            </div>
+            <div className="colorLegendEvent businessTripColor">
+                <p>Wyjazd służbowy (zielony)</p>
+            </div>
+            <div className="colorLegendEvent sickLeaveColor">
+                <p>Zwolnienie lekarskie (morski)</p>
+            </div>
+            <div className="colorLegendEvent todayColor">
+                <p>Dzisiejszy dzień (niebieski)</p>
+            </div>
+            <div className="colorLegendEvent selectedColor">
+                <p>Wybrany dzień (granatowy)</p>
+            </div>
         </div>
     </div>
-)
+);

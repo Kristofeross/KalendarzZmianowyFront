@@ -1,5 +1,24 @@
 .colorLegend{
-    margin:  10px 3px;
+    margin:  10px 0;
+    border: 1px solid #ccc;
+    padding: 20px;
+    /* border-radius: 8px; */
+    background-color: #f8f8f8;
+}
+
+.legendTitle {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.colorLegendContainer {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 8px;
+    margin-top: 5px;
+    background-color: rgb(245, 232, 199);
 }
 
 .colorLegendEvent{
@@ -7,28 +26,38 @@
     margin: 5px 0;
     padding: 5px 0;
     text-align: center;
+    border-radius: 23px;
 }
 
 .workColor{
-    background-color: rgb(220, 90, 90);
+    background-color: rgb(158, 0, 0);
+    color: white; 
 }
 
 .vacationColor{
-    background-color: rgb(129, 129, 206);
+    background-color: rgb(227, 227, 62);
+    /* background-color: rgb(255, 251, 0); */
+    color: white; 
 }
 
-.business-tripColor{
-    background-color: rgb(119, 220, 119); 
+.businessTripColor{
+    /* background-color: rgb(119, 220, 119);  */
+    background-color: rgb(15, 116, 15);
+    color: white; 
 }
 
-.sick-leaveColor{
-    background-color: rgb(205, 96, 205); 
+.sickLeaveColor{
+    /* background-color: rgb(72, 185, 190);  */
+    background-color: rgb(82, 187, 193);
+    color: white; 
 }
 
 .todayColor{
-    background-color: rgb(198, 205, 96); 
+    background-color: rgb(67, 85, 133); 
+    color: white; 
 }
 
 .selectedColor{
-    background-color: rgb(205, 96, 163); 
+    background-color: rgb(54, 48, 98); 
+    color: white; 
 }

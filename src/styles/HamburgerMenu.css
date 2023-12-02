@@ -14,21 +14,21 @@
   
 .hamburgerBarContainer {
     display: flex;
-    justify-content: space-between;
-    /* align-items: center; */
-  
+    justify-content: space-between; 
 }
 .hamburgerItem{
     width: 33%;
-    padding: 4px;
-    border: 1px solid #000;
-    background-color: rgb(129, 143, 180);
+    padding: 8px 6px;
+    /* background-color: rgb(67, 85, 133); */
+    background-color: rgb(246, 225, 176);
     text-align: center;
-    color: #fff;
+    /* color: #fff; */
+    color: #000;
     cursor: pointer;
 }
 
 .hamburgerItem:hover{
-  background-color: rgb(110, 110, 160);
+  /* background-color: rgb(54, 48, 98); */
+  background-color: rgb(220, 207, 175);
 }
   

@@ -1,63 +1,71 @@
-body{
+body {
     background: rgb(245, 232, 199);
+    margin: 0;
 }
 
-.containerLoginRegister{
+.containerLoginRegister {
     display: flex;
     flex-direction: column;
-    margin: auto;
+    margin: 0 auto;
+    height: 100vh;
     width: 600px;
+    max-width: 100%;
     background: rgb(67, 85, 133);
-    padding-bottom: 30px;
 }
 
 .header{
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 9px;
+    gap: 10px;
     width: 100%;
-    margin-top: 30px;
+    margin: 40px 0;
 }
 
 .text{
     color: rgb(245, 232, 199);
-    font-size: 48px;
+    font-size: 50px;
     font-weight: 700;
 }
 
 .underline{
-    width: 61px;
+    width: 150px;
     height: 6px;
     background: rgb(245, 232, 199);
     border-radius: 9px;
 }
 
-.input input{
-    background: rgb(245, 232, 199);
-}
-
 .inputs{
-    margin-top: 55px;
+    margin: 0;
     display: flex;
     flex-direction: column;
     gap: 25px;
 }
 
-.inputs p{
-    margin: auto;
+.submit-container{
+    display: flex;
+    gap: 30px;
+    margin: 10px auto;
+}
+
+.messageLogin {
     text-align: center;
-    font-size: large;
+    font-size: 18px;
+    margin: 10px auto;
     color: rgb(245, 232, 199);
-    width: 60%;
+    width: 83%;
+}
+
+.emptySpaceMessage{
+    margin: 20px auto;
 }
 
 .input{
     display: flex;
     align-items: center;
-    margin: auto;
+    margin: 0 auto;
     width: 480px;
-    height: 80px;
+    height: 60px;
     background: rgb(245, 232, 199);
     border-radius: 6px;
 }
@@ -67,24 +75,25 @@ body{
 }
 
 .input input{
-    height: 50px;
+    height: 30px;
     width: 400px;
     background: transparent;
     border: none;
     outline: none;
     color: rgb(54, 48, 98);
-    font-size: 19px;
+    font-size: 20px;
 }
 
-.submit-container{
-    display: flex;
-    gap: 30px;
-    margin: 60px auto;
+.emptySpaceInputs{
+    margin: 3.5vh auto;
 }
 
 .submit-container2{
-    margin: 30px auto;
-    gap: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 30px 0;
 }
 
 .submit{
@@ -92,11 +101,11 @@ body{
     justify-content: center;
     align-items: center;
     width: 220px;
-    height: 59px;
+    height: 55px;
     color: rgb(245, 232, 199);
     background: rgb(54, 48, 98);
     border-radius: 50px;
-    font-size: 19px;
+    font-size: 20px;
     font-weight: 700;
     cursor: pointer;
 }

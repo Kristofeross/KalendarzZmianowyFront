@@ -18,7 +18,8 @@ body {
 
 .calendar {
   padding: 20px;
-  background-color: rgb(255, 255, 255);
+  /* background-color: rgb(245, 232, 199); */
+  background-color: rgb(67, 85, 133);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 95%;
 }
@@ -35,7 +36,10 @@ body {
   width: 100%;
   max-width: 100%;
   height: 100%;
-  font-size: 16px;
+  font-size: 24px;
+  /* background: rgb(245, 232, 199); */
+  background-color: rgb(246, 225, 176);
+  /* background-color: rgb(67, 85, 133); */
 }
 
 .react-calendar__tile {
@@ -43,149 +47,28 @@ body {
   padding: 0;
   height: 14vmin;
   width: 15vmin;
+  font-size: 120%;
+  /* background: rgb(245, 232, 199); */
+  background-color: rgb(246, 225, 176);
+  /* background-color: rgb(67, 85, 133); */
 }
 
-.sidePanel {
-  width: 28%;
-  background-color: rgb(255, 255, 255);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  display: flex;
-  flex-direction: column;
-}
-
-/* .sidePanelForComponents{
-  margin: 20px;
-  width: 100%;
-} */
-
-.selectedDate {
-  margin: 20px 20px 0;
-  padding: 20px;
-  font-size: 30px;
-  background-color: rgb(129, 143, 180);
-  color: #fff;
-  text-align: center;
-  font-weight: bold;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-}
-
-.eventsContainer {
-  margin: 0 20px;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  /* border: 1px solid #000; */
-}
-
-.titleOfEvent {
-  font-size: 22px;
-  font-weight: bold;
-  padding: 5px 5px 15px;
-  text-align: center;
-}
-
-.eventSpace {
-  padding: 15px;
-  border: 1px solid #ddd; 
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-}
-
-/* Dodatkowe style dla select i input w eventSpace */
-.eventSpace select,
-.eventSpace input {
-  padding: 10px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.workHours {
-  display: flex;
-  align-items: center;
-  margin-top: 5px;
-}
-
-.workHours label {
-  width: 50%;
-  text-align: center;
-}
-
-.workHours input {
-  padding: 10px;
-  width: 50%;
-  box-sizing: border-box;
-}
-
-.message {
-  margin-top: 5px;
-  padding: 3px;
-  border: 1px solid #dc3545; /* Kolor obramowania dla warningu (żółty) */
-  background-color: #f8d7da;
-  color: #721c24;; /* Kolor tekstu dla warningu */
-  border-radius: 8px;
-}
-
-.featureContainer{
-  margin: 10px 20px 20px;
-}
-
-/* //////////////////////////////////// */
-.buttonsContainer {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-}
-
-.buttonStyle {
-  cursor: pointer;
-  padding: 10px;
-  background-color: rgb(129, 143, 180);
-  color: #fff;
-  text-align: center;
-  font-weight: bold;
-  margin: 10px 3px;
-}
-
-.oneButton {
-  width: 100%;
-}
-
-.twoButtons {
-  width: 50%;
-  /* margin: 10px 3px; */
-  justify-content: space-between;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* Pozostałe do kalendarza */
 /* Pozostałe style dla kalendarza */
 .react-calendar__navigation button {
-  color: rgb(54, 48, 98);
+  /* color: rgb(54, 48, 98); */
+  color: #000;
   min-width: 44px;
   background: none;
-  font-size: 16px;
+  font-size: 32px;
   margin-top: 8px;
 }
 
 /* Dodatkowe style dla kwadratów w kalendarzu */
 .react-calendar__tile:enabled:hover,
 .react-calendar__tile:enabled:focus {
-  background: rgb(245, 232, 199);
-  color: rgb(54, 48, 98);
+  background: rgb(67, 85, 133);
+  color: #fff;
   border-radius: 6px;
 }
 
@@ -216,19 +99,11 @@ body {
 }
 
 .react-calendar__tile--rangeStart {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  border-top-left-radius: 6px;
-  border-bottom-left-radius: 6px;
   background: rgb(54, 48, 98);
   color: #fff;
 }
 
 .react-calendar__tile--rangeEnd {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
   background: rgb(54, 48, 98);
   color: #fff;
 }
@@ -238,19 +113,123 @@ body {
   text-transform: capitalize;
 } 
 
+/* Tutaj dodawaj */
+.react-calendar__tile  button {
+  margin-right: 5px; /* Dodaj to */
+  margin-bottom: 5px; /* Dodaj to, jeśli chcesz odstęp również w pionie */
+}
+/* //////////////////////////////// */
+.react-calendar__month-view__weekdays {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 0.75em;
+  background-color: rgb(67, 85, 133); 
+  /* background-color: rgb(245, 232, 199); */
+  /* color: #000;  */
+  color: #fff;
+}
+
+
+
 /* Dodaj odpowiednie kolory dla różnych typów wydarzeń */
 .work-event {
-  background-color: rgb(220, 90, 90); 
+  background-color: rgb(158, 0, 0); 
 }
 
 .vacation-event {
-  background-color: rgb(129, 129, 206); 
+  background-color: rgb(227, 227, 62); 
 }
 
 .business-trip-event {
-  background-color: rgb(119, 220, 119); 
+  background-color: rgb(15, 116, 15);
 }
 
 .sick-leave-event {
-  background-color: rgb(205, 96, 205); 
+  background-color: rgb(82, 187, 193); 
+}
+
+/* Boczny panel ----------------------------------------------------------- */
+.sidePanel {
+  width: 28%;
+  background-color: rgb(67, 85, 133);
+  /* background: rgb(246, 225, 176); */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.selectedDate {
+  margin: 20px 20px 0;
+  padding: 20px;
+  font-size: 30px;
+  /* background-color: rgb(67, 85, 133); */
+  background-color: rgb(246, 225, 176);
+  color: #fff;
+  color: #000;
+  text-align: center;
+  font-weight: bold;
+  /* border-radius: 8px; */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); 
+}
+
+.eventsContainer {
+  margin: 0 20px;
+  padding: 20px;
+  background-color: #fff;
+  /* border-radius: 8px; */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.titleOfEvent {
+  font-size: 22px;
+  font-weight: bold;
+  padding: 5px 5px 15px;
+  text-align: center;
+}
+
+.eventSpace {
+  background-color: rgb(246, 225, 176);
+  padding: 15px;
+  border: 1px solid #ddd; 
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+.eventSpace select,
+.eventSpace input {
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.workHours {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.workHours label {
+  width: 50%;
+  text-align: center;
+}
+
+.workHours input {
+  padding: 10px;
+  width: 50%;
+  box-sizing: border-box;
+}
+
+.message {
+  margin-top: 5px;
+  padding: 2px;
+  border: 1px solid #dc3545;
+  background-color: #f8d7da;
+  color: #721c24;
+  text-align: center;
+}
+
+.featureContainer{
+  margin: 10px 20px 20px;
+  height: 100%;
 }

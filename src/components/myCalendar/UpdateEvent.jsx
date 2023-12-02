@@ -1,5 +1,7 @@
 import React from 'react';
-import { Message } from './Message';
+import EventForm from './EventForm';
+import Message from './Message';
+import Button from './Button';
 
 const UpdateEvent = ({
   selectedEvent,
@@ -14,23 +16,17 @@ const UpdateEvent = ({
     <>
       <div className='titleOfEvent'>Akualizowane wydarzenie</div>
       <div className='eventSpace'>
-        <select value={selectedEvent} onChange={handleChangeSelect}>
-            <option value="work">Praca</option>
-            <option value="vacation">Urlop</option>
-            <option value="business_trip">Wyjazd służbowy</option>
-            <option value="sick_leave">Zwolnienie lekarskie</option>
-        </select>
-        {selectedEvent === 'work' && (
-          <div className='workHours'>
-            <label htmlFor="">Liczba godzin: </label>
-            <input type="number" value={hours} onChange={handleHoursChange} />
-          </div>
-        )}
+        <EventForm
+          selectedEvent={selectedEvent}
+          handleChangeSelect={handleChangeSelect}
+          hours={hours}
+          handleHoursChange={handleHoursChange}
+        />
         {message && <Message message={message} />}
       </div>
       <div className='buttonsContainer'>
-        <div className='buttonStyle twoButtons' onClick={() => handleCancelAction("update")}>Anuluj</div>
-        <div className='buttonStyle twoButtons' onClick={handleUpdateEvent}>Potwierdź</div>
+        <Button action={() => handleCancelAction("update")} name={'Anuluj'} />
+        <Button action={handleUpdateEvent} name={'Potwierdź'} />
       </div>
     </>
   );
