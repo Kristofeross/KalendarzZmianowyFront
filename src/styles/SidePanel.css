@@ -1,0 +1,83 @@
+.sidePanel {
+    width: 28%;
+    background-color: rgb(67, 85, 133);
+    /* background: rgb(246, 225, 176); */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .selectedDate {
+    margin: 20px 20px 0;
+    padding: 20px;
+    font-size: 30px;
+    /* background-color: rgb(67, 85, 133); */
+    background-color: rgb(246, 225, 176);
+    color: #fff;
+    color: #000;
+    text-align: center;
+    font-weight: bold;
+    /* border-radius: 8px; */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); 
+  }
+  
+  .eventsContainer {
+    margin: 0 20px;
+    padding: 20px;
+    background-color: #fff;
+    /* border-radius: 8px; */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+  
+  .titleOfEvent {
+    font-size: 22px;
+    font-weight: bold;
+    padding: 5px 5px 15px;
+    text-align: center;
+  }
+  
+  .eventSpace {
+    background-color: rgb(246, 225, 176);
+    padding: 15px;
+    border: 1px solid #ddd; 
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  }
+  
+  .eventSpace select,
+  .eventSpace input {
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  .workHours {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+  }
+  
+  .workHours label {
+    width: 50%;
+    text-align: center;
+  }
+  
+  .workHours input {
+    padding: 10px;
+    width: 50%;
+    box-sizing: border-box;
+  }
+  
+  .message {
+    margin-top: 5px;
+    padding: 2px;
+    border: 1px solid #dc3545;
+    background-color: #f8d7da;
+    color: #721c24;
+    text-align: center;
+  }
+  
+  .featureContainer{
+    margin: 10px 20px 20px;
+    height: 100%;
+  }

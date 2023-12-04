@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import 'react-calendar/dist/Calendar.css'; 
 import '../../styles/MyCalendar.css';
+import '../../styles/SidePanel.css';
 import '../../styles/Buttons.css';
-// import '../../styles/Calendar.css';
 
 import AddEvent from './AddEvent';
 import UpdateEvent from './UpdateEvent';
@@ -42,7 +42,7 @@ const MyCalendar = () => {
       navigate('/');
     }
   }, [navigate]);
-  // Do przekierowania bez warningów
+  // Do przekierowania
   useEffect(() => {
     if (logout) {
       sessionStorage.removeItem('token');
@@ -97,13 +97,13 @@ const MyCalendar = () => {
     if (eventForDate) {
       switch (eventForDate.entry_type) {
         case 'work':
-          return 'work-event';
+          return 'workEvent';
         case 'vacation':
-          return 'vacation-event';
+          return 'vacationEvent';
         case 'business_trip':
-          return 'business-trip-event';
+          return 'businessTripEvent';
         case 'sick_leave':
-          return 'sick-leave-event';
+          return 'sickLeaveEvent';
         default:
           return '';
       }
@@ -364,9 +364,12 @@ const MyCalendar = () => {
         <Calendar
           onChange={onChange}
           value={date}
+          minDetail='year'
           className="react-calendar custom-calendar"
+          next2Label={null}
+          prev2Label={null}
           formatShortWeekday={(locale, date) =>
-            new Intl.DateTimeFormat('pl', { weekday: 'long' }).format(date) // Format na pełne nazwy dni tygodnia
+            new Intl.DateTimeFormat('pl', { weekday: 'long' }).format(date)
           }
           tileClassName={ ({ date }) => getEventColor( stringDate(date) )}
         />
